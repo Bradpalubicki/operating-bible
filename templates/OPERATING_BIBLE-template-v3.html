@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[Product Name] — Operating Bible v1.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Core palette — override per-project */
+  --night:    #0F1117;
+  --ink:      #1C1F2E;
+  --ink-2:    #3A3D52;
+  --ink-3:    #6B6E80;
+  --ink-4:    #9B9EAD;
+  --page:     #F5F3EE;
+  --page-2:   #ECEAE4;
+  --page-3:   #DDDBD4;
+  --white:    #FFFFFF;
+  --rule:     #D5D2CA;
+  /* Brand accents — REPLACE per project */
+  --accent:   #5C6BC0;
+  --accent-2: #E8A838;
+  --accent-3: #3DA882;
+  --danger:   #C94040;
+  --radius:   10px;
+  --radius-lg: 16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--page);color:var(--ink);line-height:1.65;font-size:15px;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;width:252px;height:100vh;background:var(--night);overflow-y:auto;z-index:100;padding-bottom:2rem;}
+nav::-webkit-scrollbar{width:3px;}
+nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:2px;}
+.nav-logo{padding:1.25rem 1.25rem .85rem;border-bottom:1px solid rgba(255,255,255,.07);}
+.nav-logo .app{font-family:'Instrument Serif',serif;font-size:20px;color:#fff;font-style:italic;}
+.nav-logo .ver{font-size:10px;color:rgba(255,255,255,.3);font-family:'DM Mono',monospace;margin-top:3px;}
+.nav-sec{padding:.7rem 1.25rem .2rem;font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.22);}
+nav a{display:block;padding:.32rem 1.25rem;font-size:12px;color:rgba(255,255,255,.55);text-decoration:none;transition:all .15s;border-left:2px solid transparent;line-height:1.4;}
+nav a:hover{color:#fff;background:rgba(255,255,255,.04);border-left-color:rgba(255,255,255,.2);}
+nav a.active{color:#fff;background:rgba(255,255,255,.07);border-left-color:var(--accent-2);}
+.nav-badge{display:inline-block;font-size:8px;padding:1px 5px;border-radius:3px;background:var(--accent-2);color:var(--night);font-weight:700;margin-left:4px;vertical-align:middle;}
+.nav-badge.new{background:var(--accent-3);color:#fff;}
+.nav-badge.open{background:var(--danger);color:#fff;}
+.nav-badge.warn{background:var(--accent-2);color:var(--night);}
+
+/* ── LAYOUT ── */
+main{margin-left:252px;min-height:100vh;}
+.cover{background:var(--night);padding:4rem 3rem 3.5rem;margin-left:252px;}
+.cover-inner{max-width:860px;margin:0 auto;}
+.cover-eyebrow{font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:.85rem;}
+.cover-title{font-family:'Instrument Serif',serif;font-size:54px;line-height:1.05;color:#fff;margin-bottom:.6rem;}
+.cover-title em{font-style:italic;color:var(--accent-2);}
+.cover-sub{font-size:15px;color:rgba(255,255,255,.5);max-width:580px;line-height:1.7;margin-bottom:2rem;}
+.cover-meta{display:flex;gap:2.5rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.08);padding-top:1.5rem;}
+.cover-meta-item strong{display:block;font-size:13px;color:rgba(255,255,255,.75);margin-bottom:2px;}
+.cover-meta-item span{font-size:11px;color:rgba(255,255,255,.3);font-family:'DM Mono',monospace;}
+.content{max-width:860px;margin:0 auto;padding:2.5rem 3rem 6rem;}
+
+/* ── SECTION HEADERS ── */
+.section-block{padding-top:3rem;margin-bottom:2.5rem;}
+.eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;}
+.section-title{font-family:'Instrument Serif',serif;font-size:34px;color:var(--ink);line-height:1.15;margin-bottom:.65rem;}
+.section-intro{font-size:14px;color:var(--ink-2);line-height:1.75;max-width:700px;margin-bottom:1.25rem;}
+hr.rule{border:none;border-top:1px solid var(--rule);margin-bottom:1.75rem;}
+.divider{border:none;border-top:2px solid var(--rule);margin:2.5rem 0;}
+.sub{font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin:1.1rem 0 .5rem;}
+.note{font-size:11.5px;color:var(--ink-3);font-style:italic;margin:.35rem 0;}
+
+/* ── GRIDS ── */
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:1rem 0;}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:1rem 0;}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:1rem 0;}
+
+/* ── CARDS ── */
+.card{background:var(--white);border:1px solid var(--rule);border-radius:var(--radius-lg);padding:1rem 1.15rem;}
+.card h4{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:.4rem;}
+.card p,.card li{font-size:12.5px;color:var(--ink-2);line-height:1.6;}
+.card ul{padding-left:1.1rem;margin-top:.3rem;}
+.card ul li{margin-bottom:3px;}
+.card-dark{background:var(--night);border-color:rgba(255,255,255,.08);}
+.card-dark h4{color:var(--accent-2);}
+.card-dark p,.card-dark li{color:rgba(255,255,255,.65);}
+
+/* ── ALERTS ── */
+.al{border-radius:var(--radius);padding:.75rem 1rem;font-size:12.5px;line-height:1.55;margin:.5rem 0;}
+.al strong{display:block;margin-bottom:3px;font-size:12px;font-weight:600;}
+.al-green{background:#E8F5F0;border:1px solid #6EC4A7;color:#1A4A3C;}
+.al-amber{background:#FEF6E4;border:1px solid #E8B84B;color:#6B4A0A;}
+.al-red{background:#FEE8E8;border:1px solid #E08080;color:#6B1A1A;}
+.al-blue{background:#E8F0FE;border:1px solid #7EAADE;color:#0A2A6B;}
+.al-purple{background:rgba(92,107,192,.08);border:1px solid rgba(92,107,192,.3);color:var(--night);}
+.al-night{background:var(--night);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.8);}
+
+/* ── FEATURE BLOCKS ── */
+.feat-block{margin-bottom:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid var(--rule);}
+.feat-block:last-child{border-bottom:none;}
+.feat-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:.75rem;}
+.feat-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-4);padding-top:6px;min-width:24px;}
+.feat-title{font-family:'Instrument Serif',serif;font-size:24px;color:var(--ink);}
+.feat-brand{font-size:11px;color:var(--accent);font-weight:600;margin-top:3px;letter-spacing:.03em;}
+.feat-layer{font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;display:inline-block;margin-top:4px;}
+.layer-1{background:#1A4A3C;color:#fff;}
+.layer-2{background:#4A3A0A;color:var(--accent-2);}
+.layer-3{background:var(--page-2);color:var(--ink-3);}
+.hook{border-left:3px solid var(--accent);padding:.6rem .9rem;background:rgba(92,107,192,.06);border-radius:0 var(--radius) var(--radius) 0;font-size:13px;color:var(--night);font-weight:600;margin:.6rem 0 1.1rem;font-family:'Instrument Serif',serif;font-style:italic;}
+
+/* ── FLOW STEPS ── */
+.flow-step{display:flex;gap:14px;padding:.7rem 0;border-bottom:1px solid var(--rule);}
+.flow-step:last-child{border-bottom:none;}
+.flow-n{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--accent);min-width:24px;padding-top:2px;}
+.flow-body{flex:1;}
+.flow-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.flow-desc{font-size:12.5px;color:var(--ink-2);line-height:1.55;}
+
+/* ── PERSONA CARDS ── */
+.persona{background:var(--white);border:1px solid var(--rule);border-radius:var(--radius-lg);padding:1.25rem;}
+.persona-avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin-bottom:.85rem;}
+.persona-name{font-family:'Instrument Serif',serif;font-size:22px;color:var(--ink);}
+.persona-role{font-size:12px;color:var(--accent);font-weight:600;letter-spacing:.03em;margin-bottom:.65rem;}
+.persona-quote{font-family:'Instrument Serif',serif;font-style:italic;font-size:14px;color:var(--ink-2);border-left:3px solid var(--accent-2);padding:.4rem .75rem;margin:.75rem 0;line-height:1.65;}
+.persona-body{font-size:12.5px;color:var(--ink-2);line-height:1.65;}
+.persona-body strong{color:var(--ink);}
+
+/* ── SCREEN MAP ── */
+.screen-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:1rem 0;}
+.screen-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--radius);padding:.75rem .9rem;}
+.screen-id{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);margin-bottom:3px;}
+.screen-name{font-weight:600;font-size:13px;color:var(--ink);margin-bottom:2px;}
+.screen-desc{font-size:12px;color:var(--ink-3);line-height:1.5;}
+
+/* ── TECH STACK TABLE ── */
+.tech-table{width:100%;border-collapse:collapse;font-size:12.5px;margin:.75rem 0;}
+.tech-table th{font-size:10px;font-weight:700;padding:6px 10px;background:var(--page-2);color:var(--ink-3);text-align:left;border-bottom:2px solid var(--rule);text-transform:uppercase;letter-spacing:.05em;}
+.tech-table td{padding:8px 10px;border-bottom:1px solid var(--rule);color:var(--ink);vertical-align:top;line-height:1.45;}
+.tech-table tr:last-child td{border-bottom:none;}
+.tech-table td:first-child{font-weight:600;color:var(--ink);min-width:130px;}
+.tech-table code{font-family:'DM Mono',monospace;font-size:11px;background:var(--page-2);padding:1px 5px;border-radius:3px;color:var(--accent);}
+.confirmed{color:#1A6B48;font-weight:600;}
+.unknown{color:#C94040;font-weight:600;}
+.pending{color:#8B6914;font-weight:600;}
+
+/* ── DECISION LOG ── */
+.decision{display:flex;gap:10px;padding:.65rem 0;border-bottom:1px solid var(--rule);}
+.decision:last-child{border-bottom:none;}
+.decision-status{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;height:fit-content;white-space:nowrap;margin-top:2px;flex-shrink:0;}
+.ds-done{background:#E8F5F0;color:#1A4A3C;}
+.ds-open{background:#FEF6E4;color:#6B4A0A;}
+.ds-blocked{background:#FEE8E8;color:#6B1A1A;}
+.decision-body{flex:1;}
+.decision-q{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.decision-a{font-size:12.5px;color:var(--ink-2);line-height:1.5;}
+
+/* ── ACCEPTANCE CRITERIA ── */
+.ac-block{background:var(--page-2);border-radius:var(--radius);padding:.85rem 1rem;margin:.5rem 0;}
+.ac-block h5{font-size:11px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;}
+.ac-item{display:flex;gap:8px;font-size:12.5px;color:var(--ink-2);padding:.2rem 0;line-height:1.5;}
+.ac-given{color:var(--accent);font-weight:700;min-width:56px;font-size:11px;padding-top:2px;}
+
+/* ── ANTI-VISION LIST ── */
+.anti-list{list-style:none;padding:0;}
+.anti-list li{display:flex;align-items:flex-start;gap:8px;padding:.5rem 0;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink-2);}
+.anti-list li:last-child{border-bottom:none;}
+.anti-list li::before{content:'✗';color:var(--danger);font-weight:700;margin-top:1px;flex-shrink:0;font-size:14px;}
+.anti-list li strong{color:var(--ink);}
+
+/* ── PRIORITY MATRIX ── */
+.priority-row{display:flex;align-items:flex-start;gap:12px;padding:.65rem 0;border-bottom:1px solid var(--rule);}
+.priority-row:last-child{border-bottom:none;}
+.priority-badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:2px;}
+.p-must{background:#1A4A3C;color:#fff;}
+.p-should{background:#4A3A0A;color:var(--accent-2);}
+.p-could{background:var(--page-2);color:var(--ink-3);}
+.p-wont{background:#FEE8E8;color:#C94040;}
+.priority-body{flex:1;}
+.priority-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.priority-desc{font-size:12px;color:var(--ink-3);line-height:1.5;}
+
+/* ── PHASE TRACKER ── */
+.phase{background:var(--white);border:1px solid var(--rule);border-radius:var(--radius-lg);padding:1rem 1.15rem;margin-bottom:8px;}
+.phase-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;}
+.phase-name{font-size:13px;font-weight:600;color:var(--ink);}
+.phase-pct{font-family:'DM Mono',monospace;font-size:12px;color:var(--ink-3);}
+.phase-bar{height:5px;background:var(--page-2);border-radius:3px;overflow:hidden;}
+.phase-fill{height:100%;border-radius:3px;}
+.phase-fill.done{background:var(--accent-3);}
+.phase-fill.partial{background:var(--accent-2);}
+.phase-fill.blocked{background:var(--danger);}
+.phase-fill.future{background:var(--page-3);}
+.phase-criteria{font-size:12px;color:var(--ink-3);margin-top:.5rem;line-height:1.5;}
+
+/* ── COMPETITIVE TABLE ── */
+.comp-wrap{overflow-x:auto;margin:1rem 0;}
+.comp-table{width:100%;border-collapse:collapse;font-size:12px;}
+.comp-table th{padding:8px 12px;background:var(--night);color:rgba(255,255,255,.7);text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;}
+.comp-table th:first-child{border-radius:var(--radius) 0 0 0;}
+.comp-table th:last-child{border-radius:0 var(--radius) 0 0;}
+.comp-table td{padding:8px 12px;border-bottom:1px solid var(--rule);color:var(--ink-2);vertical-align:top;}
+.comp-table td:first-child{font-weight:600;color:var(--ink);}
+.comp-table tr.us-row td{background:rgba(92,107,192,.05);font-weight:600;}
+.comp-table tr.us-row td:first-child{color:var(--accent);border-left:3px solid var(--accent);}
+.comp-yes{color:#1A6B48;font-weight:700;}
+.comp-no{color:#C94040;}
+.comp-partial{color:#8B6914;}
+
+/* ── PRICING ── */
+.price-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:1rem 0;}
+.price-tier{background:var(--white);border:1px solid var(--rule);border-radius:var(--radius-lg);padding:1.25rem;position:relative;}
+.price-tier.featured{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);}
+.tier-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:9px;font-weight:700;padding:2px 10px;border-radius:20px;white-space:nowrap;}
+.tier-name{font-size:11px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem;}
+.tier-price{font-family:'Instrument Serif',serif;font-size:34px;color:var(--ink);margin-bottom:.15rem;}
+.tier-price span{font-size:14px;color:var(--ink-3);font-family:'DM Sans',sans-serif;}
+.tier-hook{font-size:12.5px;color:var(--ink-2);margin-bottom:.85rem;line-height:1.5;}
+.tier-feature{font-size:12px;color:var(--ink-2);padding:.25rem 0;border-bottom:1px solid var(--page-2);display:flex;align-items:flex-start;gap:6px;}
+.tier-feature:last-child{border-bottom:none;}
+.tier-feature::before{content:'✓';color:var(--accent-3);font-weight:700;margin-top:1px;flex-shrink:0;}
+.tier-feature.no::before{content:'—';color:var(--ink-4);}
+
+/* ── RISK REGISTER ── */
+.risk{display:flex;gap:12px;padding:.75rem 0;border-bottom:1px solid var(--rule);}
+.risk:last-child{border-bottom:none;}
+.risk-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.risk-high{background:#C94040;}
+.risk-med{background:var(--accent-2);}
+.risk-low{background:var(--accent-3);}
+.risk-body{flex:1;}
+.risk-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.risk-mitigation{font-size:12px;color:var(--ink-3);line-height:1.5;}
+
+/* ── VOICE PAIRS ── */
+.voice-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:.5rem 0;}
+.voice-ex{border-radius:var(--radius);padding:.6rem .85rem;}
+.voice-ex .label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;}
+.voice-ex p{font-size:12.5px;line-height:1.55;}
+.voice-bad{background:#FEE8E8;}.voice-bad .label{color:#C94040;}
+.voice-bad p{color:#6B1A1A;}
+.voice-good{background:#E8F5F0;}.voice-good .label{color:#1A6B48;}
+.voice-good p{color:#1A4A3C;}
+
+/* ── PRINCIPLE BOX ── */
+.principle{background:var(--night);border-radius:var(--radius-lg);padding:1.75rem;margin-top:1.5rem;}
+.principle h3{font-family:'Instrument Serif',serif;font-size:22px;color:var(--accent-2);margin-bottom:.6rem;}
+.principle p{font-size:13px;color:rgba(255,255,255,.65);line-height:1.75;margin-bottom:.6rem;}
+.principle p:last-child{margin-bottom:0;}
+
+/* ── METRICS ── */
+.met4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:1rem 0;}
+.met{background:var(--page-2);border-radius:var(--radius);padding:.75rem .85rem;}
+.met .lbl{font-size:11px;color:var(--ink-3);margin-bottom:3px;}
+.met .val{font-size:20px;font-weight:700;color:var(--ink);}
+
+/* ── CC PROMPT PANEL — NEW IN V3 ── */
+.cc-prompt{background:var(--night);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin:.85rem 0;border:1px solid rgba(92,107,192,.3);}
+.cc-prompt h4{font-size:10px;font-weight:700;color:rgba(255,255,255,.3);margin-bottom:.65rem;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.1em;}
+.cc-prompt .cc-label{font-size:9px;font-weight:700;color:var(--accent-2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem;font-family:'DM Mono',monospace;}
+.cc-prompt pre{font-family:'DM Mono',monospace;font-size:11.5px;color:#A8B4D0;white-space:pre-wrap;line-height:1.85;}
+.cc-prompt .ph{color:var(--accent-2);}  /* placeholder */
+.cc-prompt .kw{color:#7CB8FF;}           /* keyword */
+.cc-prompt .val{color:#98E0A8;}          /* value */
+
+/* ── COMPLIANCE CHECKLIST ── */
+.compliance-row{display:flex;gap:10px;padding:.55rem 0;border-bottom:1px solid var(--rule);font-size:12.5px;}
+.compliance-row:last-child{border-bottom:none;}
+.compliance-check{flex-shrink:0;margin-top:2px;font-weight:700;}
+.compliance-check.done{color:#1A6B48;}
+.compliance-check.todo{color:var(--ink-4);}
+.compliance-check.risk{color:#C94040;}
+.compliance-label{font-weight:600;color:var(--ink);margin-bottom:1px;}
+.compliance-desc{font-size:12px;color:var(--ink-3);}
+
+/* ── CODE BLOCK ── */
+.code-block{background:var(--night);border-radius:var(--radius);padding:1rem 1.25rem;font-family:'DM Mono',monospace;font-size:11.5px;color:#A8B4D0;line-height:1.75;overflow-x:auto;margin:.5rem 0;}
+
+/* ── PILLS ── */
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin:.4rem 0;}
+.pill{font-size:11px;padding:2px 9px;border-radius:999px;font-weight:600;}
+.p-ink{background:#ECEEF8;color:var(--night);}
+.p-green{background:#E8F5F0;color:#1A4A3C;}
+.p-amber{background:#FEF6E4;color:#6B4A0A;}
+.p-red{background:#FEE8E8;color:#6B1A1A;}
+.p-accent{background:rgba(92,107,192,.12);color:var(--accent);}
+.p-gray{background:var(--page-2);color:var(--ink-2);}
+
+/* ── INVESTOR SLIDE ── */
+.slide{background:var(--white);border:1px solid var(--rule);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1rem;position:relative;}
+.slide-num{position:absolute;top:1rem;right:1rem;font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-4);}
+.slide-tag{display:inline-block;font-size:9px;padding:2px 7px;border-radius:3px;background:var(--night);color:#fff;font-weight:700;margin-bottom:.5rem;letter-spacing:.05em;text-transform:uppercase;}
+.slide h3{font-family:'Instrument Serif',serif;font-size:20px;color:var(--ink);margin-bottom:.35rem;line-height:1.3;}
+.slide .deck-sub{font-size:12.5px;color:var(--ink-2);line-height:1.6;margin-bottom:.75rem;}
+.slide .speaker{background:var(--page-2);border-radius:var(--radius);padding:.65rem .85rem;font-size:12px;color:var(--ink-2);line-height:1.55;border-left:3px solid var(--ink-4);}
+.slide .speaker::before{content:'Speaker: ';font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);}
+
+/* ── FINANCIAL ── */
+.fin-year{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1rem;}
+.fin-yr-card{background:rgba(255,255,255,.08);border-radius:var(--radius);padding:.9rem;}
+.fin-yr-card .yr-label{font-size:10px;color:rgba(255,255,255,.4);margin-bottom:.5rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+.fin-yr-card .yr-stat{margin-bottom:4px;}
+.fin-yr-card .yr-stat .k{font-size:10px;color:rgba(255,255,255,.4);}
+.fin-yr-card .yr-stat .v{font-size:16px;font-weight:700;color:#fff;}
+
+/* ── PRINT + RESPONSIVE ── */
+@media print{nav{display:none;}main,body{margin:0;}.cover{margin-left:0;page-break-after:always;}main{margin-left:0;}.content{max-width:100%;padding:2rem;}}
+@media(max-width:900px){nav{display:none;}main{margin-left:0;}.cover{margin-left:0;}.g2,.g3,.g4,.met4,.price-grid,.screen-grid,.voice-pair,.fin-year{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="sidebar">
+  <div class="nav-logo">
+    <div class="app">[Product Name]</div>
+    <div class="ver">Operating Bible · v1.0 · [Month Year]</div>
+  </div>
+  <div class="nav-sec">Foundation</div>
+  <a href="#cover">Cover</a>
+  <a href="#vision">Vision & Anti-Vision</a>
+  <a href="#personas">User Personas</a>
+  <div class="nav-sec">Market</div>
+  <a href="#competitive">Competitive Landscape</a>
+  <a href="#gaps">Market Gaps <span class="nav-badge warn">#</span></a>
+  <div class="nav-sec">Product</div>
+  <a href="#features">Feature Map (MoSCoW)</a>
+  <a href="#f1">01 · [Feature Name]</a>
+  <a href="#f2">02 · [Feature Name]</a>
+  <a href="#f3">03 · [Feature Name]</a>
+  <a href="#screens">Screen Map</a>
+  <a href="#flows">Core User Flows</a>
+  <a href="#decisions">Decision Log <span class="nav-badge open">OPEN</span></a>
+  <div class="nav-sec">Brand</div>
+  <a href="#brand">Brand Identity</a>
+  <a href="#voice">Brand Voice</a>
+  <div class="nav-sec">Tech</div>
+  <a href="#tech-stack">Tech Stack</a>
+  <a href="#architecture">Data Architecture</a>
+  <a href="#apis">APIs & Integrations</a>
+  <div class="nav-sec">Build</div>
+  <a href="#phases">Phase Tracker</a>
+  <a href="#acceptance">Acceptance Criteria</a>
+  <a href="#risks">Risk Register</a>
+  <div class="nav-sec">Business</div>
+  <a href="#pricing">Pricing & Conversion</a>
+  <a href="#metrics">Success Metrics</a>
+  <a href="#financials">Financial Model</a>
+  <a href="#pitch">Investor Pitch</a>
+  <div class="nav-sec">Compliance</div>
+  <a href="#compliance">Compliance Checklist</a>
+  <div class="nav-sec">Claude Code</div>
+  <a href="#cc-brief">CC Brief & Build Prompts</a>
+  <a href="#anti-vision">Anti-Vision Hard List</a>
+</nav>
+
+<!-- COVER -->
+<div class="cover" id="cover">
+  <div class="cover-inner">
+    <div class="cover-eyebrow">Confidential · Operating Bible · v1.0</div>
+    <div class="cover-title"><em>[Product]</em> Name</div>
+    <div class="cover-sub">One sentence. Who uses it, what day-one job it does, why now. No jargon. A parent, investor, or engineer should understand it instantly.</div>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><strong>Product URL</strong><span>product.vercel.app</span></div>
+      <div class="cover-meta-item"><strong>Primary User</strong><span>[Role / Context / Core Need]</span></div>
+      <div class="cover-meta-item"><strong>Stack</strong><span>Next.js 16 · Supabase · Clerk · Square</span></div>
+      <div class="cover-meta-item"><strong>Business Model</strong><span>[Subscription / One-time / Freemium]</span></div>
+      <div class="cover-meta-item"><strong>Phase</strong><span>1 of N — [Phase Name]</span></div>
+      <div class="cover-meta-item"><strong>Version</strong><span>1.0 · [Month Year]</span></div>
+    </div>
+  </div>
+</div>
+
+<main>
+<div class="content">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: VISION -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="vision">
+  <div class="eyebrow">Foundation</div>
+  <div class="section-title">Vision, Principles & Anti-Vision</div>
+  <div class="section-intro">The north star every product decision is tested against. If a feature doesn't serve this vision, it doesn't ship.</div>
+  <hr class="rule">
+
+  <div class="sub">Product vision statement</div>
+  <div class="card" style="margin-bottom:1rem;">
+    <p style="font-family:'Instrument Serif',serif;font-style:italic;font-size:15px;line-height:1.8;color:var(--ink);">[3–5 sentences. Be specific. Name the user, the transformation, why no one else does this right. This is read at the start of every CC session.]</p>
+  </div>
+
+  <div class="sub">5 product design principles</div>
+  <div class="g2">
+    <div class="card"><h4>1. [Principle Name]</h4><p>[What this means in practice. Give a concrete example of a decision this principle makes or rejects. What would VIOLATE this principle? That's as useful as the positive.]</p></div>
+    <div class="card"><h4>2. [Principle Name]</h4><p>[Concrete example. A feature that passes this test vs. one that fails it.]</p></div>
+    <div class="card"><h4>3. [Principle Name]</h4><p>[If you only shipped one thing this sprint, this principle tells you which one.]</p></div>
+    <div class="card"><h4>4. [Principle Name]</h4><p>[The emotion or behavior this principle protects in the user experience.]</p></div>
+    <div class="card"><h4>5. [Principle Name]</h4><p>[The last resort principle — when everything else is equal, this wins.]</p></div>
+  </div>
+
+  <div class="principle">
+    <h3>The single most important design principle</h3>
+    <p>One sentence. Tiebreaker. When two engineers disagree, this sentence ends the debate. Specific enough to be useful. Short enough to memorize.</p>
+    <p><strong>Template:</strong> "Every [interaction/feature/screen] must [specific behavior] — never [anti-pattern]."</p>
+  </div>
+
+  <div class="sub" style="margin-top:1.5rem;">What [Product] is NOT — the anti-vision</div>
+  <div class="al al-red"><strong>These are permanent constraints — not deferred features.</strong> A feature that violates the anti-vision is rejected at ideation, not at review.</div>
+  <div class="g2" style="margin-top:.75rem;">
+    <div class="card"><h4>Not [Anti-Vision 1]</h4><p>[Explain why this would undermine the core product promise. Be specific about the damage it would do to trust or the user relationship.]</p></div>
+    <div class="card"><h4>Not [Anti-Vision 2]</h4><p>[What negative pattern exists in the market that you are explicitly refusing to copy. Why does refusing it differentiate you?]</p></div>
+    <div class="card"><h4>Not [Anti-Vision 3]</h4><p>[A common "more is more" instinct that would bloat the product. Why simplicity here is a feature, not a limitation.]</p></div>
+    <div class="card"><h4>Not [Anti-Vision 4]</h4><p>[A monetization pattern you will never use and why — because it conflicts with your value proposition.]</p></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: PERSONAS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="personas">
+  <div class="eyebrow">Users</div>
+  <div class="section-title">User Personas</div>
+  <div class="section-intro">Named people with specific frustrations. Not demographics. Not averages. Specific people with specific moments where this product will change their day.</div>
+  <hr class="rule">
+
+  <div class="al al-blue"><strong>Multi-audience requirement (mandatory):</strong> Every product has at least 3 audiences. Map all of them. Never design for one. Missing audience = incomplete spec.</div>
+
+  <div class="sub" style="margin-top:1rem;">Audience map</div>
+  <div class="g3">
+    <div class="card"><h4>Audience 1 — [Name]</h4><p><strong>Job:</strong> [What they need to DO in the app]</p><p style="margin-top:.4rem;"><strong>What they see:</strong> [Which screens/sections serve them]</p><p style="margin-top:.4rem;"><strong>Success for them:</strong> [What does "it worked" feel like?]</p></div>
+    <div class="card"><h4>Audience 2 — [Name]</h4><p><strong>Job:</strong> [What they need to DO]</p><p style="margin-top:.4rem;"><strong>What they see:</strong> [Which screens]</p><p style="margin-top:.4rem;"><strong>Success for them:</strong> [What does "it worked" feel like?]</p></div>
+    <div class="card"><h4>Audience 3 — NuStack Agency</h4><p><strong>Job:</strong> Monitor client health, onboard new clients, troubleshoot issues</p><p style="margin-top:.4rem;"><strong>What they see:</strong> Agency dashboard — status, snapshot, managed_client table</p><p style="margin-top:.4rem;"><strong>Success for them:</strong> Zero manual client check-ins needed</p></div>
+  </div>
+
+  <div class="sub" style="margin-top:1.5rem;">Primary user persona</div>
+  <div class="persona">
+    <div class="persona-avatar" style="background:#E8F0FE;color:#1A3A8A;">[I]</div>
+    <div class="persona-name">[First Name], [Age]</div>
+    <div class="persona-role">[Job Title / Life Context / How they found this]</div>
+    <div class="persona-quote">"[The sentence they'd say out loud that this product answers. Not marketing copy — the raw, real frustration in their own words.]"</div>
+    <div class="persona-body">
+      <strong>What they want:</strong> [Functional need + emotional need + social need — all three, specific]<br><br>
+      <strong>Current workaround:</strong> [What they're doing today that fails them. Name the product or method.]<br><br>
+      <strong>What would make them leave:</strong> [The specific betrayal that ends the relationship. This is as important as what keeps them.]
+    </div>
+  </div>
+
+  <div class="sub">Secondary user persona</div>
+  <div class="persona">
+    <div class="persona-avatar" style="background:#FEF6CC;color:#5A4000;">[I]</div>
+    <div class="persona-name">[First Name], [Age]</div>
+    <div class="persona-role">[Job / Life Context]</div>
+    <div class="persona-quote">"[Their raw frustration]"</div>
+    <div class="persona-body">
+      <strong>What they want:</strong> [Specific needs]<br><br>
+      <strong>Current workaround:</strong> [What fails them today]<br><br>
+      <strong>What would make them leave:</strong> [The specific exit trigger]
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: COMPETITIVE -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="competitive">
+  <div class="eyebrow">Market Intelligence</div>
+  <div class="section-title">Competitive Landscape</div>
+  <hr class="rule">
+
+  <div class="g2" style="margin-bottom:1.25rem;">
+    <div class="card"><h4>[Competitor 1]</h4><div class="pills"><span class="pill p-gray">[Price]</span><span class="pill p-amber">[Status]</span></div><p>[What they do, why they win, why they fall short. Be specific — pricing, market position, the gap they leave open.]</p></div>
+    <div class="card"><h4>[Competitor 2]</h4><div class="pills"><span class="pill p-gray">[Price]</span><span class="pill p-green">[Status]</span></div><p>[What they do, why they win, why they fall short.]</p></div>
+    <div class="card"><h4>[Competitor 3]</h4><div class="pills"><span class="pill p-gray">[Price]</span></div><p>[What they do, why they win, why they fall short.]</p></div>
+    <div class="card"><h4>[Competitor 4]</h4><div class="pills"><span class="pill p-gray">[Price]</span></div><p>[What they do, why they win, why they fall short.]</p></div>
+  </div>
+
+  <div class="comp-wrap">
+    <table class="comp-table">
+      <thead><tr><th>Feature</th><th>🎯 [Us]</th><th>[Comp 1]</th><th>[Comp 2]</th><th>[Comp 3]</th><th>[Comp 4]</th></tr></thead>
+      <tbody>
+        <tr class="us-row"><td>[Key differentiator 1]</td><td><span class="comp-yes">✅ [How]</span></td><td class="comp-no">✗</td><td class="comp-no">✗</td><td class="comp-partial">Partial</td><td class="comp-no">✗</td></tr>
+        <tr><td>[Key differentiator 2]</td><td class="us-row"><span class="comp-yes">✅ [How]</span></td><td class="comp-no">✗</td><td class="comp-partial">Partial</td><td class="comp-no">✗</td><td class="comp-no">✗</td></tr>
+        <tr><td>[Feature 3]</td><td><span class="comp-yes">✅</span></td><td><span class="comp-yes">✅</span></td><td class="comp-no">✗</td><td class="comp-partial">Partial</td><td class="comp-no">✗</td></tr>
+        <tr><td>Pricing</td><td>[Our price]</td><td>[Comp price]</td><td>[Comp price]</td><td>[Comp price]</td><td>[Comp price]</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: MARKET GAPS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="gaps">
+  <div class="eyebrow">Strategy</div>
+  <div class="section-title">Market Gaps — What Nobody Offers</div>
+  <div class="section-intro">These are the build targets. Each gap is a competitive moat. If we don't ship it, someone else will.</div>
+  <hr class="rule">
+
+  <div class="g2">
+    <div class="card"><h4>Gaps 1–5</h4><ul>
+      <li>[Gap 1 — name it specifically. Why does it exist? Why hasn't anyone solved it?]</li>
+      <li>[Gap 2]</li>
+      <li>[Gap 3]</li>
+      <li>[Gap 4]</li>
+      <li>[Gap 5]</li>
+    </ul></div>
+    <div class="card"><h4>Gaps 6–10</h4><ul>
+      <li>[Gap 6]</li>
+      <li>[Gap 7]</li>
+      <li>[Gap 8]</li>
+      <li>[Gap 9]</li>
+      <li>[Gap 10 — the one no one has even tried]</li>
+    </ul></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: FEATURE MAP (MoSCoW) -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="features">
+  <div class="eyebrow">Product</div>
+  <div class="section-title">Feature Map — MoSCoW Priority</div>
+  <div class="section-intro">Must-have = blocks launch. Should = ships in v1.1. Could = backlog. Won't = anti-vision, never ships.</div>
+  <hr class="rule">
+
+  <div class="priority-row"><span class="priority-badge p-must">MUST</span><div class="priority-body"><div class="priority-title">[Feature] — [Layer 1]</div><div class="priority-desc">[One sentence: what it does, who needs it on day one, why removing it breaks the core loop.]</div></div></div>
+  <div class="priority-row"><span class="priority-badge p-must">MUST</span><div class="priority-body"><div class="priority-title">[Feature] — [Layer 1]</div><div class="priority-desc">[Why it must exist on launch day.]</div></div></div>
+  <div class="priority-row"><span class="priority-badge p-should">SHOULD</span><div class="priority-body"><div class="priority-title">[Feature] — [Layer 2]</div><div class="priority-desc">[Why it ships in week 2, not day 1.]</div></div></div>
+  <div class="priority-row"><span class="priority-badge p-should">SHOULD</span><div class="priority-body"><div class="priority-title">[Feature] — [Layer 2]</div><div class="priority-desc">[Why it ships in week 2.]</div></div></div>
+  <div class="priority-row"><span class="priority-badge p-could">COULD</span><div class="priority-body"><div class="priority-title">[Feature] — Backlog</div><div class="priority-desc">[Why it's valuable but not urgent. What signal tells us it's time to build it?]</div></div></div>
+  <div class="priority-row"><span class="priority-badge p-wont">WON'T</span><div class="priority-body"><div class="priority-title">[Feature] — Anti-Vision</div><div class="priority-desc">[Explicit reason this will never ship. Anti-vision violation or complexity that doesn't serve day-one users.]</div></div></div>
+  <div class="priority-row"><span class="priority-badge p-wont">WON'T</span><div class="priority-body"><div class="priority-title">[Feature] — Anti-Vision</div><div class="priority-desc">[Explicit reason this will never ship.]</div></div></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- FEATURE DETAIL BLOCKS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<!-- F1 -->
+<div class="feat-block" id="f1">
+  <div class="eyebrow">Feature 01</div>
+  <div class="feat-header">
+    <span class="feat-num">01</span>
+    <div>
+      <div class="feat-title">[Feature Name]</div>
+      <div class="feat-brand">Branded: "[Marketing Name]" · [Who uses it]</div>
+      <span class="feat-layer layer-1">Layer 1 — ships day one</span>
+    </div>
+  </div>
+  <div class="hook">"[The one-line hook — what the user says to someone else about this feature. Not marketing copy. The actual words.]"</div>
+
+  <div class="g2">
+    <div class="card">
+      <h4>[Sub-component 1]</h4>
+      <ul>
+        <li>[Specific behavior — what it does, not what category it falls in]</li>
+        <li>[Second behavior]</li>
+        <li>[Third behavior]</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>[Sub-component 2]</h4>
+      <ul>
+        <li>[Specific behavior]</li>
+        <li>[Second behavior]</li>
+        <li>[Edge case or failure state]</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sub">Actual UX copy — what the user sees/reads/hears</div>
+  <div class="card">
+    <p style="font-style:italic;color:var(--ink-2);">[Write the real words. Not "user sees a confirmation message." Write: "Your appointment is confirmed for Tuesday at 2pm. We'll text you a reminder 2 hours before."]</p>
+    <p style="font-style:italic;color:var(--ink-2);margin-top:.5rem;">[Error state copy: "Something went wrong saving your appointment. Your info wasn't lost — try again or call us at [number]."]</p>
+  </div>
+
+  <div class="sub">Acceptance criteria</div>
+  <div class="ac-block">
+    <h5>Feature 01 — acceptance gates</h5>
+    <div class="ac-item"><span class="ac-given">GIVEN</span><span>[starting state — user is on X screen, logged in, has Y data]</span></div>
+    <div class="ac-item"><span class="ac-given">WHEN</span><span>[user takes specific action]</span></div>
+    <div class="ac-item"><span class="ac-given">THEN</span><span>[specific, measurable result — not "user sees success." "Supabase row is created with status='confirmed', user sees confirmation card with appointment time."]</span></div>
+    <div class="ac-item" style="margin-top:.5rem;"><span class="ac-given">GIVEN</span><span>[failure starting state]</span></div>
+    <div class="ac-item"><span class="ac-given">WHEN</span><span>[action that should fail gracefully]</span></div>
+    <div class="ac-item"><span class="ac-given">THEN</span><span>[specific error behavior — toast, fallback, what's preserved]</span></div>
+  </div>
+
+  <!-- CC PROMPT PANEL — NEW IN V3 -->
+  <div class="cc-prompt">
+    <h4>Claude Code Build Prompt — Feature 01</h4>
+    <div class="cc-label">Micro-prompt 1 of N (max 3 files)</div>
+    <pre>Build <span class="kw">[Feature 01]</span> for <span class="ph">[Product Name]</span>.
+
+<span class="kw">Files to create/edit (max 3):</span>
+<span class="val">1.</span> <span class="ph">app/[route]/page.tsx</span> — [what this file does]
+<span class="val">2.</span> <span class="ph">app/api/[endpoint]/route.ts</span> — [what this file does]
+<span class="val">3.</span> <span class="ph">components/[component].tsx</span> — [what this file does]
+
+<span class="kw">Acceptance criteria:</span>
+- GIVEN [state] WHEN [action] THEN [result]
+- GIVEN [state] WHEN [action] THEN [result]
+
+<span class="kw">Do NOT build:</span> [scope boundary — what is explicitly out of this micro-prompt]
+
+<span class="kw">Verify with:</span> npx tsc --noEmit && npm run build</pre>
+  </div>
+</div>
+
+<!-- F2 — copy/modify this block for each feature -->
+<div class="feat-block" id="f2">
+  <div class="eyebrow">Feature 02 · Killer Differentiator</div>
+  <div class="feat-header">
+    <span class="feat-num">02</span>
+    <div>
+      <div class="feat-title">[Feature Name — the one that wins deals]</div>
+      <div class="feat-brand">Branded: "[Marketing Name]" · [Who it serves]</div>
+      <span class="feat-layer layer-1">Layer 1 — ships day one</span>
+    </div>
+  </div>
+  <div class="hook">"[The hook that closes the sale — what no competitor can say.]"</div>
+
+  <div class="al al-purple"><strong>Why this is the only one:</strong> [Name every competitor that doesn't have this. Technical reason it's hard to copy. Why shipping it first creates a moat.]</div>
+
+  <div class="sub">Actual UX copy / dialogue / output</div>
+  <div class="card">
+    <p style="font-style:italic;color:var(--ink-2);">[Write the real words. Real screen copy. Real email subject. Real notification text. Not descriptions of them.]</p>
+  </div>
+
+  <div class="sub">Acceptance criteria</div>
+  <div class="ac-block">
+    <h5>Feature 02 — acceptance gates</h5>
+    <div class="ac-item"><span class="ac-given">GIVEN</span><span>[state]</span></div>
+    <div class="ac-item"><span class="ac-given">WHEN</span><span>[action]</span></div>
+    <div class="ac-item"><span class="ac-given">THEN</span><span>[specific measurable result]</span></div>
+  </div>
+
+  <div class="cc-prompt">
+    <h4>Claude Code Build Prompt — Feature 02</h4>
+    <div class="cc-label">Micro-prompt 1 of N (max 3 files)</div>
+    <pre>Build <span class="kw">[Feature 02]</span> for <span class="ph">[Product Name]</span>.
+
+<span class="kw">Files:</span>
+<span class="val">1.</span> <span class="ph">[file path]</span> — [purpose]
+<span class="val">2.</span> <span class="ph">[file path]</span> — [purpose]
+
+<span class="kw">Acceptance criteria:</span>
+- GIVEN [state] WHEN [action] THEN [result]
+
+<span class="kw">Do NOT build:</span> [scope boundary]
+
+<span class="kw">Verify with:</span> npx tsc --noEmit</pre>
+  </div>
+</div>
+
+<!-- F3 placeholder -->
+<div class="feat-block" id="f3">
+  <div class="eyebrow">Feature 03</div>
+  <div class="feat-header">
+    <span class="feat-num">03</span>
+    <div>
+      <div class="feat-title">[Feature Name]</div>
+      <div class="feat-brand">Branded: "[Marketing Name]"</div>
+      <span class="feat-layer layer-2">Layer 2 — week one</span>
+    </div>
+  </div>
+  <div class="hook">"[Hook]"</div>
+  <!-- Repeat pattern from F1/F2 -->
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: SCREEN MAP -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="screens">
+  <div class="eyebrow">Architecture</div>
+  <div class="section-title">Complete Screen Map</div>
+  <hr class="rule">
+
+  <div class="sub">Onboarding flow</div>
+  <div class="screen-grid">
+    <div class="screen-card"><div class="screen-id">SCREEN_01</div><div class="screen-name">[Screen Name]</div><div class="screen-desc">[What it shows, what actions are available, where it navigates to on success/failure.]</div></div>
+    <div class="screen-card"><div class="screen-id">SCREEN_02</div><div class="screen-name">[Screen Name]</div><div class="screen-desc">[Description]</div></div>
+    <div class="screen-card"><div class="screen-id">SCREEN_03</div><div class="screen-name">[Screen Name]</div><div class="screen-desc">[Description]</div></div>
+  </div>
+
+  <div class="sub">Main app screens</div>
+  <div class="screen-grid">
+    <div class="screen-card"><div class="screen-id">MAIN_01</div><div class="screen-name">[Screen Name]</div><div class="screen-desc">[Description]</div></div>
+    <div class="screen-card"><div class="screen-id">MAIN_02</div><div class="screen-name">[Screen Name]</div><div class="screen-desc">[Description]</div></div>
+    <div class="screen-card"><div class="screen-id">MAIN_03</div><div class="screen-name">[Screen Name]</div><div class="screen-desc">[Description]</div></div>
+    <div class="screen-card"><div class="screen-id">MAIN_04</div><div class="screen-name">[Screen Name]</div><div class="screen-desc">[Description]</div></div>
+    <div class="screen-card"><div class="screen-id">ERROR_01</div><div class="screen-name">Empty / Error State</div><div class="screen-desc">[What the user sees when there's no data or an error. Write the actual copy — not "loading" or "error".]</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: USER FLOWS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="flows">
+  <div class="eyebrow">Architecture</div>
+  <div class="section-title">Core User Flows</div>
+  <hr class="rule">
+
+  <div class="sub">Flow 1 — [Most important first-time experience]</div>
+  <div class="al al-purple"><strong>This is the most important UX in the product.</strong> Every word of copy is scripted. There are no generic fallbacks here.</div>
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="flow-step"><div class="flow-n">1</div><div class="flow-body"><div class="flow-title">[Step name]</div><div class="flow-desc">[Specific screen state. Specific copy. What the user sees, what they can do, what happens if they do nothing.]</div></div></div>
+    <div class="flow-step"><div class="flow-n">2</div><div class="flow-body"><div class="flow-title">[Step name]</div><div class="flow-desc">[Specific behavior. Include copy — the actual words, not descriptions of tone.]</div></div></div>
+    <div class="flow-step"><div class="flow-n">3</div><div class="flow-body"><div class="flow-title">[Step name]</div><div class="flow-desc">[Edge case or failure path documented here. Not just the happy path.]</div></div></div>
+    <div class="flow-step"><div class="flow-n">4</div><div class="flow-body"><div class="flow-title">[Step name — completion]</div><div class="flow-desc">[What constitutes "done"? What is the user's feeling at this moment? What is stored in the DB?]</div></div></div>
+  </div>
+
+  <div class="sub">Flow 2 — [Second critical path]</div>
+  <div class="card">
+    <div class="flow-step"><div class="flow-n">1</div><div class="flow-body"><div class="flow-title">[Step]</div><div class="flow-desc">[Specific behavior]</div></div></div>
+    <div class="flow-step"><div class="flow-n">2</div><div class="flow-body"><div class="flow-title">[Step]</div><div class="flow-desc">[Specific behavior]</div></div></div>
+    <div class="flow-step"><div class="flow-n">3</div><div class="flow-body"><div class="flow-title">[Completion]</div><div class="flow-desc">[What's stored, what user sees]</div></div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: DECISION LOG — NEW IN V3 -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="decisions">
+  <div class="eyebrow">Architecture · v3 Addition</div>
+  <div class="section-title">Decision Log</div>
+  <div class="section-intro">Every architectural decision with open/closed status. Open decisions are blockers. They get resolved before build starts, not during.</div>
+  <hr class="rule">
+
+  <div class="al al-amber"><strong>[N] open decisions</strong> — these must be resolved before CC starts building. Open = ask Brad. Blocked = waiting on external input.</div>
+
+  <div style="margin-top:1rem;">
+    <div class="decision">
+      <span class="decision-status ds-done">DONE</span>
+      <div class="decision-body">
+        <div class="decision-q">[Decision question — e.g., "Which payment processor?"]</div>
+        <div class="decision-a"><strong>Decision:</strong> [Answer] — [Brief reason. Why this option, why not the alternatives.]</div>
+      </div>
+    </div>
+    <div class="decision">
+      <span class="decision-status ds-done">DONE</span>
+      <div class="decision-body">
+        <div class="decision-q">[Decision question — e.g., "Multi-tenant or single-tenant?"]</div>
+        <div class="decision-a"><strong>Decision:</strong> [Answer] — [Reason]</div>
+      </div>
+    </div>
+    <div class="decision">
+      <span class="decision-status ds-open">OPEN</span>
+      <div class="decision-body">
+        <div class="decision-q">[Unresolved question — e.g., "Do we need real-time updates on the dashboard?"]</div>
+        <div class="decision-a"><strong>Options:</strong> [Option A] vs [Option B] — <strong>Impact:</strong> [What breaks or changes depending on the answer. Why this can't be decided later.]</div>
+      </div>
+    </div>
+    <div class="decision">
+      <span class="decision-status ds-blocked">BLOCKED</span>
+      <div class="decision-body">
+        <div class="decision-q">[Question blocked on external input — e.g., "What are the client's Square credentials?"]</div>
+        <div class="decision-a"><strong>Waiting on:</strong> [Who / what] — <strong>Workaround if delayed:</strong> [How we build around it in the meantime]</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: BRAND -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="brand">
+  <div class="eyebrow">Brand</div>
+  <div class="section-title">Brand Identity</div>
+  <hr class="rule">
+
+  <div class="sub">Color palette</div>
+  <div class="g4">
+    <div class="card"><div style="height:44px;border-radius:8px;background:[primary color];margin-bottom:.5rem;"></div><h4>[Color Name]</h4><p style="font-family:'DM Mono',monospace;font-size:11px;">[HEX] · Primary</p></div>
+    <div class="card"><div style="height:44px;border-radius:8px;background:[secondary color];margin-bottom:.5rem;"></div><h4>[Color Name]</h4><p style="font-family:'DM Mono',monospace;font-size:11px;">[HEX] · Secondary</p></div>
+    <div class="card"><div style="height:44px;border-radius:8px;background:[accent color];margin-bottom:.5rem;"></div><h4>[Color Name]</h4><p style="font-family:'DM Mono',monospace;font-size:11px;">[HEX] · Accent</p></div>
+    <div class="card"><div style="height:44px;border-radius:8px;background:[background];margin-bottom:.5rem;"></div><h4>[Color Name]</h4><p style="font-family:'DM Mono',monospace;font-size:11px;">[HEX] · Background</p></div>
+  </div>
+
+  <div class="sub">Typography</div>
+  <div class="g2">
+    <div class="card"><h4>Display / Headings</h4><p>[Font family] · Weights: [list]. Used for: hero, section titles, feature names. Never for body copy.</p></div>
+    <div class="card"><h4>Body / UI</h4><p>[Font family] · Weights: [list]. Used for: all body text, buttons, labels, navigation.</p></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: BRAND VOICE -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="voice">
+  <div class="eyebrow">Brand</div>
+  <div class="section-title">Brand Voice</div>
+  <div class="section-intro">The voice is consistent across every surface — onboarding copy, error states, notifications, emails, marketing pages. These aren't tone guidelines. They are copy rules.</div>
+  <hr class="rule">
+
+  <div class="sub">Voice in 5 words</div>
+  <div class="pills">
+    <span class="pill p-accent">[Word 1]</span>
+    <span class="pill p-accent">[Word 2]</span>
+    <span class="pill p-accent">[Word 3]</span>
+    <span class="pill p-accent">[Word 4]</span>
+    <span class="pill p-accent">[Word 5]</span>
+  </div>
+
+  <div class="sub" style="margin-top:1rem;">Voice in practice — do vs. don't</div>
+  <div class="voice-pair">
+    <div class="voice-ex voice-bad"><div class="label">Don't write this</div><p>"[Generic, corporate, or emotionally hollow copy. The kind of thing SaaS companies write when they don't care about their users.]"</p></div>
+    <div class="voice-ex voice-good"><div class="label">Write this instead</div><p>"[Specific, warm, direct. The sentence that sounds like a real person who respects the user's time and intelligence.]"</p></div>
+  </div>
+  <div class="voice-pair">
+    <div class="voice-ex voice-bad"><div class="label">Don't write this</div><p>"[Error message that says nothing: 'An error occurred. Please try again.']"</p></div>
+    <div class="voice-ex voice-good"><div class="label">Write this instead</div><p>"[Error message that helps: 'Couldn't save your appointment — your info is safe. Try again, or call us at [number].']"</p></div>
+  </div>
+  <div class="voice-pair">
+    <div class="voice-ex voice-bad"><div class="label">Don't write this</div><p>"[Onboarding copy that talks about the product: 'Our platform offers powerful scheduling tools.']"</p></div>
+    <div class="voice-ex voice-good"><div class="label">Write this instead</div><p>"[Onboarding copy that talks about the user: 'Your first appointment is one tap away.']"</p></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: TECH STACK -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="tech-stack">
+  <div class="eyebrow">Tech</div>
+  <div class="section-title">Tech Stack</div>
+  <hr class="rule">
+
+  <table class="tech-table">
+    <thead><tr><th>Layer</th><th>Technology</th><th>Version</th><th>Status</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Framework</td><td>Next.js App Router</td><td>16.x</td><td class="confirmed">Confirmed</td><td>Server Components default. Client only when needed.</td></tr>
+      <tr><td>Language</td><td>TypeScript</td><td>5.x strict</td><td class="confirmed">Confirmed</td><td>No <code>any</code>. Strict mode, no exceptions.</td></tr>
+      <tr><td>Database</td><td>Supabase PostgreSQL</td><td>Latest</td><td class="confirmed">Confirmed</td><td>RLS on every table. No exceptions.</td></tr>
+      <tr><td>Auth</td><td>[Clerk / Supabase Auth]</td><td>Latest</td><td class="confirmed">Confirmed</td><td>[Scope: single-tenant / orgs / multi-tenant]</td></tr>
+      <tr><td>Payments</td><td>[Square SDK / RevenueCat]</td><td>Latest</td><td class="pending">Pending credentials</td><td>[Who holds the account. What env vars are needed.]</td></tr>
+      <tr><td>Forms</td><td>React Hook Form + Zod</td><td>Latest</td><td class="confirmed">Confirmed</td><td>All forms. Never raw useState for form state.</td></tr>
+      <tr><td>AI</td><td>Claude API (claude-sonnet-4-6)</td><td>Latest</td><td class="confirmed">Confirmed</td><td>Server-side proxy only. Never expose API key to client.</td></tr>
+      <tr><td>Styling</td><td>Tailwind CSS + shadcn/ui</td><td>Latest</td><td class="confirmed">Confirmed</td><td>shadcn as base, Tailwind for customization.</td></tr>
+      <tr><td>Hosting</td><td>Vercel</td><td>—</td><td class="confirmed">Confirmed</td><td>Auto-deploy from main. Project name: [exact name]</td></tr>
+      <tr><td>Error tracking</td><td>Sentry</td><td>Latest</td><td class="unknown">Not set up yet</td><td>Required before launch.</td></tr>
+      <tr><td>Analytics</td><td>[PostHog / TBD]</td><td>Latest</td><td class="unknown">TBD</td><td>[Decision pending]</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: DATA ARCHITECTURE -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="architecture">
+  <div class="eyebrow">Tech</div>
+  <div class="section-title">Data Architecture</div>
+  <hr class="rule">
+
+  <div class="sub">Core tables</div>
+  <div class="code-block">
+-- [table_name] — [what this table represents]
+CREATE TABLE [table_name] (
+  id          UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id     TEXT NOT NULL,          -- Clerk user_id
+  [field]     [TYPE] NOT NULL,
+  [field]     [TYPE],
+  created_at  TIMESTAMPTZ DEFAULT now(),
+  updated_at  TIMESTAMPTZ DEFAULT now()
+);
+
+-- RLS
+ALTER TABLE [table_name] ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "[table_name]_user_only" ON [table_name]
+  FOR ALL USING (auth.uid()::text = user_id);
+  </div>
+
+  <div class="sub">Agency connection table</div>
+  <div class="code-block">
+-- managed_clients — wires this engine to the agency dashboard
+-- Populated by /agency-connect skill
+CREATE TABLE managed_clients (
+  id          UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  client_id   TEXT UNIQUE NOT NULL,
+  client_name TEXT NOT NULL,
+  secret      TEXT NOT NULL,          -- hashed, used for /api/agency/status auth
+  created_at  TIMESTAMPTZ DEFAULT now()
+);
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: APIs & INTEGRATIONS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="apis">
+  <div class="eyebrow">Tech</div>
+  <div class="section-title">APIs & Integrations</div>
+  <hr class="rule">
+
+  <table class="tech-table">
+    <thead><tr><th>Integration</th><th>Purpose</th><th>Env Var</th><th>Owner</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Supabase</td><td>Database + Auth</td><td><code>SUPABASE_URL</code> <code>SUPABASE_ANON_KEY</code></td><td>NuStack</td><td class="confirmed">Set</td></tr>
+      <tr><td>Clerk</td><td>Auth + user management</td><td><code>CLERK_SECRET_KEY</code> <code>NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY</code></td><td>NuStack</td><td class="confirmed">Set</td></tr>
+      <tr><td>[Square / RevenueCat]</td><td>Payments</td><td><code>[SQUARE_ACCESS_TOKEN]</code></td><td>[Client holds this]</td><td class="pending">Pending</td></tr>
+      <tr><td>Anthropic (Claude)</td><td>AI features</td><td><code>ANTHROPIC_API_KEY</code></td><td>NuStack</td><td class="confirmed">Set</td></tr>
+      <tr><td>Sentry</td><td>Error tracking</td><td><code>SENTRY_DSN</code></td><td>NuStack</td><td class="unknown">Not set up</td></tr>
+      <tr><td>[Integration]</td><td>[Purpose]</td><td><code>[ENV_VAR]</code></td><td>[Owner]</td><td class="unknown">TBD</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: PHASE TRACKER -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="phases">
+  <div class="eyebrow">Build</div>
+  <div class="section-title">Phase Tracker</div>
+  <hr class="rule">
+
+  <div class="phase">
+    <div class="phase-header"><span class="phase-name">Phase 1 — [Name] (Layer 1)</span><span class="phase-pct">0%</span></div>
+    <div class="phase-bar"><div class="phase-fill future" style="width:0%"></div></div>
+    <div class="phase-criteria">Exit criteria: [Specific, measurable conditions — not "features are complete." E.g., "User can book, pay, and receive confirmation without any manual intervention. Zero TypeScript errors. Build passes."]</div>
+  </div>
+  <div class="phase">
+    <div class="phase-header"><span class="phase-name">Phase 2 — [Name] (Layer 2)</span><span class="phase-pct">0%</span></div>
+    <div class="phase-bar"><div class="phase-fill future" style="width:0%"></div></div>
+    <div class="phase-criteria">Exit criteria: [Specific conditions]</div>
+  </div>
+  <div class="phase">
+    <div class="phase-header"><span class="phase-name">Phase 3 — [Name] (Layer 2 + agency)</span><span class="phase-pct">0%</span></div>
+    <div class="phase-bar"><div class="phase-fill future" style="width:0%"></div></div>
+    <div class="phase-criteria">Exit criteria: [Specific conditions]</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: ACCEPTANCE CRITERIA -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="acceptance">
+  <div class="eyebrow">Build · v3 Addition</div>
+  <div class="section-title">Global Acceptance Criteria</div>
+  <div class="section-intro">These apply to the entire build — every feature must pass all of them before the phase is done.</div>
+  <hr class="rule">
+
+  <div class="ac-block">
+    <h5>Build quality gates — all phases</h5>
+    <div class="ac-item"><span class="ac-given">GIVEN</span><span>any PR or commit to main</span></div>
+    <div class="ac-item"><span class="ac-given">WHEN</span><span>npm run build && npm run lint run</span></div>
+    <div class="ac-item"><span class="ac-given">THEN</span><span>zero errors, zero TypeScript errors (npx tsc --noEmit passes)</span></div>
+  </div>
+
+  <div class="ac-block" style="margin-top:.5rem;">
+    <h5>Security gates — all features</h5>
+    <div class="ac-item"><span class="ac-given">GIVEN</span><span>any API route that reads or writes user data</span></div>
+    <div class="ac-item"><span class="ac-given">WHEN</span><span>request arrives with a user_id</span></div>
+    <div class="ac-item"><span class="ac-given">THEN</span><span>route verifies data ownership (user_id matches auth token) before any DB operation</span></div>
+  </div>
+
+  <div class="ac-block" style="margin-top:.5rem;">
+    <h5>Empty state gates — all list screens</h5>
+    <div class="ac-item"><span class="ac-given">GIVEN</span><span>user has no data in a list screen (new account)</span></div>
+    <div class="ac-item"><span class="ac-given">WHEN</span><span>screen renders</span></div>
+    <div class="ac-item"><span class="ac-given">THEN</span><span>friendly empty state with specific copy and a CTA — not a blank screen or default browser nothing</span></div>
+  </div>
+
+  <div class="ac-block" style="margin-top:.5rem;">
+    <h5>Loading state gates — all async operations</h5>
+    <div class="ac-item"><span class="ac-given">GIVEN</span><span>any async operation (API call, DB read, payment processing)</span></div>
+    <div class="ac-item"><span class="ac-given">WHEN</span><span>operation is in flight</span></div>
+    <div class="ac-item"><span class="ac-given">THEN</span><span>skeleton or spinner visible — user cannot double-submit. Button disabled during processing.</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: RISK REGISTER -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="risks">
+  <div class="eyebrow">Build</div>
+  <div class="section-title">Risk Register</div>
+  <hr class="rule">
+
+  <div class="risk"><div class="risk-dot risk-high"></div><div class="risk-body"><div class="risk-title">[Risk: e.g., "Payment credentials not available at build time"]</div><div class="risk-mitigation"><strong>Mitigation:</strong> [e.g., "Build with Stripe test mode first. Block go-live on Square credential receipt. Checklist item in launch-ready."] <strong>Owner:</strong> [Brad / Client / NuStack]</div></div></div>
+  <div class="risk"><div class="risk-dot risk-high"></div><div class="risk-body"><div class="risk-title">[Risk: e.g., "RLS misconfiguration exposes other users' data"]</div><div class="risk-mitigation"><strong>Mitigation:</strong> [e.g., "Every table has RLS enabled before any data is written. Supabase policy test run in app-audit."] <strong>Owner:</strong> NuStack</div></div></div>
+  <div class="risk"><div class="risk-dot risk-med"></div><div class="risk-body"><div class="risk-title">[Risk: medium]</div><div class="risk-mitigation"><strong>Mitigation:</strong> [mitigation] <strong>Owner:</strong> [owner]</div></div></div>
+  <div class="risk"><div class="risk-dot risk-low"></div><div class="risk-body"><div class="risk-title">[Risk: low]</div><div class="risk-mitigation"><strong>Mitigation:</strong> [mitigation] <strong>Owner:</strong> [owner]</div></div></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: PRICING -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="pricing">
+  <div class="eyebrow">Business</div>
+  <div class="section-title">Pricing Architecture</div>
+  <hr class="rule">
+
+  <div class="price-grid">
+    <div class="price-tier">
+      <div class="tier-name">Free / Trial</div>
+      <div class="tier-price">$0 <span>/ month</span></div>
+      <div class="tier-hook">[What the free tier gives them. What it withholds to create upgrade pressure without dark patterns.]</div>
+      <div class="tier-feature">[Feature included]</div>
+      <div class="tier-feature">[Feature included — with limit, e.g., "5 bookings/month"]</div>
+      <div class="tier-feature no">[Feature NOT included — creates upgrade moment]</div>
+    </div>
+    <div class="price-tier featured">
+      <div class="tier-badge">Most [clients / users] choose this</div>
+      <div class="tier-name">Pro / Standard</div>
+      <div class="tier-price">$XX <span>/ month</span></div>
+      <div class="tier-hook">[One sentence: what you get for the money that you can't get free, and why it's worth it.]</div>
+      <div class="tier-feature">[Full feature]</div>
+      <div class="tier-feature">[Full feature]</div>
+      <div class="tier-feature">[Full feature]</div>
+      <div class="tier-feature">[Unlimited X]</div>
+    </div>
+    <div class="price-tier">
+      <div class="tier-name">Enterprise / Agency</div>
+      <div class="tier-price">$XXX <span>/ month</span></div>
+      <div class="tier-hook">[Who this tier is for — multi-location, white-label, custom integrations.]</div>
+      <div class="tier-feature">[Everything in Pro]</div>
+      <div class="tier-feature">[Additional feature]</div>
+      <div class="tier-feature">[Priority support / SLA]</div>
+    </div>
+  </div>
+
+  <div class="sub">Upgrade moment copy — what the user sees at the paywall</div>
+  <div class="card">
+    <p style="font-style:italic;color:var(--ink-2);">[Write the actual paywall copy. Not "user sees a prompt to upgrade." The headline, the body, the CTA. The upgrade moment is a UX decision — it's designed here, not improvised in the code.]</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: SUCCESS METRICS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="metrics">
+  <div class="eyebrow">Business</div>
+  <div class="section-title">Success Metrics</div>
+  <hr class="rule">
+
+  <div class="met4">
+    <div class="met"><div class="lbl">Primary metric</div><div class="val">[Metric]</div></div>
+    <div class="met"><div class="lbl">90-day target</div><div class="val">[Number]</div></div>
+    <div class="met"><div class="lbl">Revenue target</div><div class="val">[MRR]</div></div>
+    <div class="met"><div class="lbl">Churn max</div><div class="val">[%/mo]</div></div>
+  </div>
+
+  <div class="sub">The single number</div>
+  <div class="principle">
+    <h3>[The one metric that proves the engine is working]</h3>
+    <p>[What this number is. How it's measured. What PostHog event or Supabase query produces it. Why this number — not engagement, not signups, but this specific outcome.]</p>
+    <p><strong>Measurement:</strong> <code style="color:var(--accent-2);font-family:'DM Mono',monospace;">[PostHog event name or Supabase query]</code></p>
+    <p><strong>What it is NOT:</strong> [The vanity metric this replaces. Why that metric would lie to you.]</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: FINANCIAL MODEL -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="financials">
+  <div class="eyebrow">Business</div>
+  <div class="section-title">Financial Model</div>
+  <hr class="rule">
+
+  <div style="background:var(--night);border-radius:var(--radius-lg);padding:1.25rem;">
+    <div class="fin-year">
+      <div class="fin-yr-card">
+        <div class="yr-label">Year 1</div>
+        <div class="yr-stat"><div class="k">MRR target</div><div class="v">$[X]k</div></div>
+        <div class="yr-stat"><div class="k">Clients</div><div class="v">[N]</div></div>
+        <div class="yr-stat"><div class="k">ARR</div><div class="v">$[X]k</div></div>
+      </div>
+      <div class="fin-yr-card">
+        <div class="yr-label">Year 2</div>
+        <div class="yr-stat"><div class="k">MRR target</div><div class="v">$[X]k</div></div>
+        <div class="yr-stat"><div class="k">Clients</div><div class="v">[N]</div></div>
+        <div class="yr-stat"><div class="k">ARR</div><div class="v">$[X]k</div></div>
+      </div>
+      <div class="fin-yr-card">
+        <div class="yr-label">Year 3</div>
+        <div class="yr-stat"><div class="k">MRR target</div><div class="v">$[X]k</div></div>
+        <div class="yr-stat"><div class="k">Clients</div><div class="v">[N]</div></div>
+        <div class="yr-stat"><div class="k">ARR</div><div class="v">$[X]k</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">LTV calculation</div>
+  <div class="g3">
+    <div class="card"><h4>LTV</h4><p>$[price]/mo × [avg retention months] = <strong>$[LTV]</strong></p></div>
+    <div class="card"><h4>CAC</h4><p>[Acquisition channel] at [cost] per client = <strong>$[CAC]</strong></p></div>
+    <div class="card"><h4>LTV:CAC</h4><p><strong>[X]:1</strong> — [healthy = 3:1+. Note if this needs work.]</p></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: COMPLIANCE -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="compliance">
+  <div class="eyebrow">Compliance</div>
+  <div class="section-title">Safety & Compliance Checklist</div>
+  <hr class="rule">
+
+  <div class="compliance-row"><div class="compliance-check done">✓</div><div><div class="compliance-label">RLS on all user-data tables</div><div class="compliance-desc">Every Supabase table with user data has Row Level Security enabled and policy verified.</div></div></div>
+  <div class="compliance-row"><div class="compliance-check done">✓</div><div><div class="compliance-label">API keys server-side only</div><div class="compliance-desc">No secrets in client bundle. All API calls proxied through server actions or route handlers.</div></div></div>
+  <div class="compliance-row"><div class="compliance-check done">✓</div><div><div class="compliance-label">Data ownership verified in every API route</div><div class="compliance-desc">Every route that reads/writes user data checks that the requester owns that data.</div></div></div>
+  <div class="compliance-row"><div class="compliance-check todo">○</div><div><div class="compliance-label">Sentry error tracking live in production</div><div class="compliance-desc">Required before launch. Not optional.</div></div></div>
+  <div class="compliance-row"><div class="compliance-check todo">○</div><div><div class="compliance-label">[Vertical-specific compliance]</div><div class="compliance-desc">[HIPAA / COPPA / TCPA / PCI — depends on vertical. Add the requirements here.]</div></div></div>
+  <div class="compliance-row"><div class="compliance-check risk">⚠</div><div><div class="compliance-label">[Known compliance risk]</div><div class="compliance-desc">[What the risk is and what we're doing about it before launch.]</div></div></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: CLAUDE CODE BRIEF — KEY V3 ADDITION -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="cc-brief">
+  <div class="eyebrow">Claude Code · v3 Addition</div>
+  <div class="section-title">CC Build Brief & Micro-Prompts</div>
+  <div class="section-intro">The complete build sequence for this engine. Each micro-prompt covers max 3 files. CC reads this section as the authoritative build plan. No ad-hoc decisions during build.</div>
+  <hr class="rule">
+
+  <div class="al al-night"><strong>Build sequence rule:</strong> Each micro-prompt must pass <code style="color:var(--accent-2);">npx tsc --noEmit && npm run build</code> before the next one starts. If it fails — fix it, don't move on.</div>
+
+  <div class="sub" style="margin-top:1rem;">Micro-prompt 1 — Foundation (DB + Auth)</div>
+  <div class="cc-prompt">
+    <h4>Claude Code Build Prompt — MP1</h4>
+    <div class="cc-label">Files: max 3</div>
+    <pre><span class="kw">PROJECT:</span> <span class="ph">[Product Name]</span>
+<span class="kw">BRIEF:</span> .claude/BRIEF.md
+<span class="kw">MICRO-PROMPT:</span> 1 of [N]
+
+<span class="kw">Goal:</span> Set up Supabase schema + Clerk auth + project scaffold.
+
+<span class="kw">Files to create:</span>
+<span class="val">1.</span> <span class="ph">supabase/migrations/001_init.sql</span> — core tables with RLS
+<span class="val">2.</span> <span class="ph">middleware.ts</span> — Clerk middleware, protect all routes except public
+<span class="val">3.</span> <span class="ph">lib/supabase.ts</span> — Supabase client (server + browser)
+
+<span class="kw">Schema:</span>
+[Paste exact CREATE TABLE statements from the Data Architecture section above]
+
+<span class="kw">Acceptance:</span>
+- GIVEN a logged-out user WHEN they hit any protected route THEN redirected to /sign-in
+- GIVEN migration runs THEN all tables exist with RLS enabled
+- npx tsc --noEmit passes with zero errors
+
+<span class="kw">Do NOT build:</span> Any UI. Any API routes. Just foundation.</pre>
+  </div>
+
+  <div class="sub">Micro-prompt 2 — [Feature 01] (Core UI)</div>
+  <div class="cc-prompt">
+    <h4>Claude Code Build Prompt — MP2</h4>
+    <div class="cc-label">Files: max 3</div>
+    <pre><span class="kw">PROJECT:</span> <span class="ph">[Product Name]</span>
+<span class="kw">MICRO-PROMPT:</span> 2 of [N]
+
+<span class="kw">Goal:</span> [Feature 01] — [one sentence outcome]
+
+<span class="kw">Files:</span>
+<span class="val">1.</span> <span class="ph">[file]</span> — [purpose]
+<span class="val">2.</span> <span class="ph">[file]</span> — [purpose]
+<span class="val">3.</span> <span class="ph">[file]</span> — [purpose]
+
+<span class="kw">Acceptance:</span>
+- GIVEN [state] WHEN [action] THEN [result]
+
+<span class="kw">Do NOT build:</span> [scope boundary]
+
+<span class="kw">Verify:</span> npx tsc --noEmit && npm run build</pre>
+  </div>
+
+  <div class="sub">Micro-prompt 3 — [Feature 02]</div>
+  <div class="cc-prompt">
+    <h4>Claude Code Build Prompt — MP3</h4>
+    <div class="cc-label">Files: max 3</div>
+    <pre><span class="kw">PROJECT:</span> <span class="ph">[Product Name]</span>
+<span class="kw">MICRO-PROMPT:</span> 3 of [N]
+
+<span class="kw">Goal:</span> [Feature 02] — [outcome]
+
+<span class="kw">Files:</span>
+<span class="val">1.</span> <span class="ph">[file]</span> — [purpose]
+<span class="val">2.</span> <span class="ph">[file]</span> — [purpose]
+
+<span class="kw">Acceptance:</span>
+- GIVEN [state] WHEN [action] THEN [result]
+
+<span class="kw">Do NOT build:</span> [boundary]
+
+<span class="kw">Verify:</span> npx tsc --noEmit</pre>
+  </div>
+
+  <div class="note">[Continue adding micro-prompts for each build phase. Max 3 files per prompt. Never skip verification. Never combine prompts.]</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: ANTI-VISION HARD LIST -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="anti-vision">
+  <div class="eyebrow">Hard Constraints</div>
+  <div class="section-title">Anti-Vision — Things That Will Never Ship</div>
+  <div class="section-intro">CC reads this list before adding any feature. If a proposed feature appears here, it is rejected immediately — not deferred, not discussed.</div>
+  <hr class="rule">
+
+  <ul class="anti-list">
+    <li><strong>[Anti-vision item 1]</strong> — [Why it violates the product's core promise. Be specific. Not "we don't want to be complex." "This pattern would make the operator feel surveilled instead of supported — it inverts the trust relationship."]</li>
+    <li><strong>[Anti-vision item 2]</strong> — [Why it's permanent, not deferred. What damage it would cause to user trust or product clarity.]</li>
+    <li><strong>[Anti-vision item 3]</strong> — [Dark pattern, monetization scheme, or engagement mechanic that trades user wellbeing for metrics.]</li>
+    <li><strong>[Anti-vision item 4]</strong> — [Feature category that belongs to a different product entirely — e.g., "Full EHR" belongs in a medical system, not our booking engine.]</li>
+    <li><strong>[Anti-vision item 5]</strong> — [Platform-level complexity that breaks the minimum viable complexity law for day-one users.]</li>
+  </ul>
+
+  <div class="principle" style="margin-top:1.5rem;">
+    <h3>The Minimum Viable Complexity Law</h3>
+    <p>"Does the client, on day one, need to see or interact with this to run their business?"</p>
+    <p><strong>YES →</strong> build it simple. <strong>NO →</strong> hide it, defer it, or don't build it. Nothing from Layer 3 belongs on the dashboard. Ever.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: INVESTOR PITCH (optional) -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="pitch">
+  <div class="eyebrow">Business</div>
+  <div class="section-title">Investor Pitch Deck</div>
+  <div class="section-intro">The canonical slide deck. Every slide has speaker notes. Multi-audience: primary buyer in room / internal champion who forwards it / skeptic who vetoes it.</div>
+  <hr class="rule">
+
+  <div class="slide">
+    <div class="slide-num">01</div>
+    <div class="slide-tag">Problem</div>
+    <h3>[What exists today that shouldn't]</h3>
+    <div class="deck-sub">[One paragraph. The pain. Named. Specific. A story, not a statistic. Why this pain is expensive and unacceptable today.]</div>
+    <div class="speaker">[Speaker note: what the presenter emphasizes, what they skip, how they handle the skeptic in the room.]</div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-num">02</div>
+    <div class="slide-tag">Solution</div>
+    <h3>[What we built that fixes it]</h3>
+    <div class="deck-sub">[Product in plain language. Not features — the transformation. Before/after for the user.]</div>
+    <div class="speaker">[Speaker note]</div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-num">03</div>
+    <div class="slide-tag">Market</div>
+    <h3>[Market size — TAM, SAM, SOM]</h3>
+    <div class="deck-sub">[Numbers with sources. TAM = total market. SAM = who we can reach. SOM = what we'll capture in 3 years. Be conservative. Investors distrust hockey sticks.]</div>
+    <div class="speaker">[Speaker note]</div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-num">04</div>
+    <div class="slide-tag">Traction</div>
+    <h3>[What exists today that proves the thesis]</h3>
+    <div class="deck-sub">[Users, revenue, letters of intent, waitlist — whatever you have. The single number. Trend line, not snapshot.]</div>
+    <div class="speaker">[Speaker note]</div>
+  </div>
+</div>
+
+</div><!-- /content -->
+</main>
+
+<script>
+// Active nav link on scroll
+const sections = document.querySelectorAll('[id]');
+const navLinks = document.querySelectorAll('nav a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+</body>
+</html>
