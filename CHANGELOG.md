@@ -1,6 +1,49 @@
 # Operating Bible — Template Changelog
 
-## v3.1 — 2026-03-24 (Current)
+## v3.3 — 2026-03-24 (Current)
+
+### Gap fixes — Operating Handbook + CC Brief YAML
+
+**Gap 1 fixed — `id="ops"` Operating Handbook section added:**
+- New section before `#deploy` with eyebrow "Operations"
+- `.meta-contract` card at top: full `app_bible_contract` YAML block (app_id, platform, vertical, tier, build_phase, prod_branch, deploy_target, payments, auth, compliance, ai_key_location, permissions block, frozen_files, escalation)
+- "How CC uses this document" — 5-step session read order: BRIEF.md → MEMORY.md → build-rules.md → pending-todos.md → Bible (section reference)
+- Amber alert: "A stale BRIEF.md is worse than no BRIEF.md"
+- Nav link added: `#ops — Operating Handbook` as first item under Operations nav group
+
+**Gap 2 fixed — `#cc-brief` YAML block added:**
+- `.meta-contract` card at top of cc-brief section, before all micro-prompts
+- Labeled: "Machine-readable contract — CC parses this first"
+- Contains same YAML fields as `#ops` (keep in sync note added)
+- Positioned above the existing build sequence rule alert
+
+---
+
+## v3.2 — 2026-03-24
+
+### ChatGPT Research Report additions (three-tier ops contract system)
+
+**New template files:**
+- `VERCEL-OPS-CONTRACT.md` — Separate machine-readable deploy contract. YAML blocks for scope, permissions, deployment_safety, rollback, env var rules (with rotation cadence), spend threshold, escalation, file ownership, and monthly recovery test log. CC reads before any deploy action.
+- `RUNBOOK-template.md` — Per-incident response playbook. One file per incident type in `ops/runbooks/`. Sections: trigger condition, immediate response (exact commands), diagnosis checklist, fix steps A/B/C, verify-resolved smoke test, one-liner postmortem format, monthly test procedure.
+
+**Updated BRIEF-template.md:**
+- Added `MACHINE-READABLE CONTRACT` YAML block at the top (before Section 1). Fields: meta (app slug, platform, phase, vertical, owner, agency_client_id), permissions (create_files, modify_schema, push_to_main, install_packages), deployment_safety (blackout_windows, pre_deploy_required), escalation (spend_threshold, sev_01_response).
+- Added `VERCEL-OPS-CONTRACT.md` and `ops/runbooks/` to Section 13 memory files list.
+
+**Updated README.md:**
+- Added three-tier contract system table (BRIEF.md / VERCEL-OPS-CONTRACT.md / runbooks)
+- Added `ops/runbooks/` to project folder structure
+- Updated files list with new templates
+
+**What was filtered out from the ChatGPT report (overkill or already covered):**
+- `SLO.yaml` as a separate versioned file — already in `OPERATING_BIBLE.html#slos`, sufficient for NuStack scale
+- Protection Bypass token documentation added inline to VERCEL-OPS-CONTRACT.md instead of a separate file
+- Session-start validation ritual (CC reads BRIEF → validates against SLO before deploy) — already enforced via CLAUDE.md mandatory build sequence
+
+---
+
+## v3.1 — 2026-03-24
 
 ### Research-driven additions (from Deep Research Report: Turning the Operating Bible into a Build Blueprint and Operational Runbook)
 

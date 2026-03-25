@@ -6,6 +6,36 @@
 
 ---
 
+## MACHINE-READABLE CONTRACT (CC reads this first)
+
+```yaml
+meta:
+  app: [app-slug]
+  platform: vercel              # vercel | eas | railway
+  phase: [1-7]                  # current build phase
+  vertical: [e.g., health | childcare | trades | professional-services]
+  owner: brad@nustack.digital
+  agency_client_id: [slug or null if internal]
+
+permissions:
+  create_files: true            # within src/ only
+  modify_schema: migration_required
+  push_to_main: ask             # never | ask | yes-for-hotfixes
+  install_packages: ask         # yes | ask
+
+deployment_safety:
+  blackout_windows: []          # ["Sunday 00:00-06:00 UTC"] or []
+  pre_deploy_required:
+    - tsc_passes: true
+    - build_passes: true
+
+escalation:
+  spend_threshold: $[amount]
+  sev_01_response: rollback_first
+```
+
+---
+
 ## 1. PRODUCT IN ONE SENTENCE
 
 [What it is, who it's for, what day-one job it does.]
@@ -165,6 +195,8 @@ Analytics:      [PostHog / none yet]
 - `.claude/OPERATING_BIBLE.html#deploy` — Deploy contract (rollback, env vars, spend threshold)
 - `.claude/OPERATING_BIBLE.html#slos` — SLOs and alert definitions
 - `.claude/OPERATING_BIBLE.html#third-parties` — Third-party registry and failure modes
+- `.claude/VERCEL-OPS-CONTRACT.md` — Machine-readable deploy permissions + escalation rules
+- `ops/runbooks/` — One runbook per incident type (bad-deploy, high-error-rate, secret-leaked)
 
 ---
 

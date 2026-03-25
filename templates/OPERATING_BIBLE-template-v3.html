@@ -398,6 +398,7 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin-bottom:1.75rem;}
   <a href="#financials">Financial Model</a>
   <a href="#pitch">Investor Pitch</a>
   <div class="nav-sec">Operations</div>
+  <a href="#ops">Operating Handbook</a>
   <a href="#deploy">Deploy Contract</a>
   <a href="#slos">SLOs & Alerts</a>
   <a href="#incidents">Incident Response</a>
@@ -1175,6 +1176,59 @@ CREATE TABLE managed_clients (
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: OPERATING HANDBOOK — v3.2 ADDITION                   -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="ops">
+  <div class="eyebrow">Operations</div>
+  <div class="section-title">Operating Handbook</div>
+  <div class="section-intro">The machine-readable identity block CC parses at session start, plus the read order for every build session. Fill this in before writing a single line of code.</div>
+  <hr class="rule">
+
+  <div class="sub">Machine-readable contract — CC parses this first</div>
+  <div class="meta-contract">
+    <div class="mc-label">app_bible_contract</div>
+    <div class="mc-row"><span class="mc-key">app_id:</span><span class="mc-val">"[product-slug]"</span></div>
+    <div class="mc-row"><span class="mc-key">platform:</span><span class="mc-val">"vercel" <span class="mc-comment"># vercel | eas | railway</span></span></div>
+    <div class="mc-row"><span class="mc-key">vertical:</span><span class="mc-val">"[health | legal | kids | equipment | wellness | beauty | other]"</span></div>
+    <div class="mc-row"><span class="mc-key">tier:</span><span class="mc-val">"T0" <span class="mc-comment"># T0=internal | T1=client-engine | T2=platform-product</span></span></div>
+    <div class="mc-row"><span class="mc-key">build_phase:</span><span class="mc-val">"[1-of-N]"</span></div>
+    <div class="mc-row"><span class="mc-key">prod_branch:</span><span class="mc-val">"main"</span></div>
+    <div class="mc-row"><span class="mc-key">deploy_target:</span><span class="mc-val">"[vercel-prod | eas-build | railway]"</span></div>
+    <div class="mc-row"><span class="mc-key">payments:</span><span class="mc-val">"[square | revenuecat | stripe-legacy | none]"</span></div>
+    <div class="mc-row"><span class="mc-key">auth:</span><span class="mc-val">"[clerk | supabase-auth]"</span></div>
+    <div class="mc-row"><span class="mc-key">compliance:</span><span class="mc-val">[] <span class="mc-comment"># COPPA | GDPR | HIPAA | TCPA | PCI</span></span></div>
+    <div class="mc-row"><span class="mc-key">ai_key_location:</span><span class="mc-val">"[vercel-env | supabase-edge-function-env | none]"</span></div>
+    <div class="mc-label" style="margin-top:.75rem;">permissions:</div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-key">create_files:</span><span class="mc-val">true <span class="mc-comment"># within src/ only</span></span></div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-key">modify_schema:</span><span class="mc-val">"migration-file-required"</span></div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-key">push_to_main:</span><span class="mc-val">false <span class="mc-comment"># never | ask | yes-for-hotfixes</span></span></div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-key">install_packages:</span><span class="mc-val">"ask-first"</span></div>
+    <div class="mc-label" style="margin-top:.75rem;">frozen_files:</div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-val">- "supabase/migrations/*"</span></div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-val">- ".env.production"</span></div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-val">- "[any file explicitly frozen this session — see BRIEF.md §11]"</span></div>
+    <div class="mc-label" style="margin-top:.75rem;">escalation:</div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-key">sev0_contact:</span><span class="mc-val">"Brad — immediate"</span></div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-key">spend_threshold:</span><span class="mc-val">"$[X]/mo — pause all deploys, alert Brad"</span></div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-key">owner:</span><span class="mc-val">"brad@nustack.digital"</span></div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-key">agency_client_id:</span><span class="mc-val">"[client-slug | nustack-internal]"</span></div>
+  </div>
+
+  <div class="sub" style="margin-top:1.5rem;">How CC uses this document — session read order</div>
+  <div class="card">
+    <div class="flow-step"><div class="flow-n">1</div><div class="flow-body"><div class="flow-title">BRIEF.md</div><div class="flow-desc">Read first. Every session. Contains: product sentence, 90-day metric, what's built, audiences, payments, auth scope, layer constraints, deploy target, tech stack, permissions, session goals. If BRIEF.md is stale → stop and update it before building.</div></div></div>
+    <div class="flow-step"><div class="flow-n">2</div><div class="flow-body"><div class="flow-title">MEMORY.md</div><div class="flow-desc">Active projects, key file locations, pending todos. Prevents re-building what's already built. Prevents stepping on in-progress work.</div></div></div>
+    <div class="flow-step"><div class="flow-n">3</div><div class="flow-body"><div class="flow-title">memory/build-rules.md</div><div class="flow-desc">Forms (react-hook-form + zod), RLS rules, Server Actions over API routes, commit format, TypeScript strictness rules. Non-negotiable. Applies to every file touched.</div></div></div>
+    <div class="flow-step"><div class="flow-n">4</div><div class="flow-body"><div class="flow-title">memory/pending-todos.md</div><div class="flow-desc">Outstanding items from prior sessions. Check before starting any new build — there may be a half-finished feature or a known bug that blocks the current task.</div></div></div>
+    <div class="flow-step"><div class="flow-n">5</div><div class="flow-body"><div class="flow-title">This Bible (section reference)</div><div class="flow-desc">Read specific sections as needed — not the whole file every session. Most-used sections: <code>#decisions</code> (blockers), <code>#cc-brief</code> (micro-prompts), <code>#deploy</code> (before any deployment), <code>#third-parties</code> (before touching integrations), <code>#anti-vision</code> (before adding any feature).</div></div></div>
+  </div>
+
+  <div class="al al-amber" style="margin-top:1rem;"><strong>Rule:</strong> A stale BRIEF.md is worse than no BRIEF.md. If the BRIEF.md doesn't match the current state of the repo, update it first — before any build work begins.</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
 <!-- SECTION: PROJECT META CONTRACT — v3.1 ADDITION                -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <!-- NOTE: This block is machine-readable. CC reads it before any  -->
@@ -1466,7 +1520,30 @@ agency_client_id: "[client-slug | nustack-internal]"
   <div class="section-intro">The complete build sequence for this engine. Each micro-prompt covers max 3 files. CC reads this section as the authoritative build plan. No ad-hoc decisions during build.</div>
   <hr class="rule">
 
-  <div class="al al-night"><strong>Build sequence rule:</strong> Each micro-prompt must pass <code style="color:var(--accent-2);">npx tsc --noEmit && npm run build</code> before the next one starts. If it fails — fix it, don't move on.</div>
+  <div class="sub">Machine-readable contract — CC parses this first</div>
+  <div class="meta-contract">
+    <div class="mc-label">app_bible_contract <span class="mc-comment"># copy to .claude/BRIEF.md YAML block — keep in sync</span></div>
+    <div class="mc-row"><span class="mc-key">app_id:</span><span class="mc-val">"[product-slug]"</span></div>
+    <div class="mc-row"><span class="mc-key">platform:</span><span class="mc-val">"[vercel | eas | railway]"</span></div>
+    <div class="mc-row"><span class="mc-key">vertical:</span><span class="mc-val">"[health | legal | kids | equipment | wellness | beauty | other]"</span></div>
+    <div class="mc-row"><span class="mc-key">build_phase:</span><span class="mc-val">"[N-of-M]"</span></div>
+    <div class="mc-row"><span class="mc-key">prod_branch:</span><span class="mc-val">"main"</span></div>
+    <div class="mc-row"><span class="mc-key">payments:</span><span class="mc-val">"[square | revenuecat | stripe-legacy | none]"</span></div>
+    <div class="mc-row"><span class="mc-key">auth:</span><span class="mc-val">"[clerk | supabase-auth]"</span></div>
+    <div class="mc-row"><span class="mc-key">compliance:</span><span class="mc-val">[] <span class="mc-comment"># COPPA | GDPR | HIPAA | TCPA | PCI</span></span></div>
+    <div class="mc-row"><span class="mc-key">ai_key_location:</span><span class="mc-val">"[vercel-env | supabase-edge-function-env | none]"</span></div>
+    <div class="mc-label" style="margin-top:.75rem;">permissions:</div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-key">create_files:</span><span class="mc-val">true</span></div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-key">modify_schema:</span><span class="mc-val">"migration-file-required"</span></div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-key">push_to_main:</span><span class="mc-val">false</span></div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-key">install_packages:</span><span class="mc-val">"ask-first"</span></div>
+    <div class="mc-label" style="margin-top:.75rem;">frozen_files:</div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-val">- "supabase/migrations/*"</span></div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-val">- ".env.production"</span></div>
+    <div class="mc-row" style="padding-left:1.25rem;"><span class="mc-val">- "[add per-project frozen files here]"</span></div>
+  </div>
+
+  <div class="al al-night" style="margin-top:1rem;"><strong>Build sequence rule:</strong> Each micro-prompt must pass <code style="color:var(--accent-2);">npx tsc --noEmit && npm run build</code> before the next one starts. If it fails — fix it, don't move on.</div>
 
   <div class="sub" style="margin-top:1rem;">Micro-prompt 1 — Foundation (DB + Auth)</div>
   <div class="cc-prompt">

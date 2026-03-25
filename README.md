@@ -23,10 +23,25 @@ Template: `templates/OPERATING_BIBLE-template-v3.html`
 ```
 /project-root/
   .claude/
-    BRIEF.md              ← CC reads at session start
-    OPERATING_BIBLE.html  ← Full reference (don't read every session)
-    QUICK_REFERENCE.md    ← One-page cheat sheet (optional)
+    BRIEF.md                  ← CC reads at session start (every session)
+    OPERATING_BIBLE.html      ← Full reference (section reference, not full read)
+    VERCEL-OPS-CONTRACT.md    ← Machine-readable deploy permissions + escalation rules
+  ops/
+    runbooks/
+      bad-deploy.md           ← SEV 0/1 bad deploy response
+      high-error-rate.md      ← Sentry spike response
+      secret-leaked.md        ← Credential compromise response
+      db-down.md              ← Supabase outage response
+      payment-failure.md      ← Square/Stripe failure response
 ```
+
+### Three-tier contract system (v3.2)
+
+| File | When CC reads it | Purpose |
+|------|-----------------|---------|
+| `BRIEF.md` | Every session start | Bootstrap contract — product, stack, permissions, session goals |
+| `VERCEL-OPS-CONTRACT.md` | Before any deploy action | Platform contract — deploy rules, env vars, escalation, rollback |
+| `ops/runbooks/*.md` | When incident occurs | Response SOPs — one file per incident type, tested monthly |
 
 ---
 
@@ -48,14 +63,16 @@ Learned from PocketPals v5 — the gold standard:
 
 ```
 templates/
-  BRIEF-template.md              ← 12-section CC session brief
-  OPERATING_BIBLE-template-v3.html ← Full HTML Operating Bible (v3 improvements over v2)
+  BRIEF-template.md                  ← CC session brief (with YAML machine-readable block)
+  OPERATING_BIBLE-template-v3.html   ← Full HTML Operating Bible (v3.1+)
+  VERCEL-OPS-CONTRACT.md             ← Machine-readable deploy contract template
+  RUNBOOK-template.md                ← Per-incident runbook template
 
 examples/
-  pocketpals-brief.md            ← PocketPals BRIEF.md (derived from v5 bible)
+  pocketpals-brief.md                ← PocketPals BRIEF.md (derived from v5 bible)
 
-CHANGELOG.md                     ← Version history of the templates
-README.md                        ← This file
+CHANGELOG.md                         ← Version history of the templates
+README.md                            ← This file
 ```
 
 ---
@@ -64,6 +81,8 @@ README.md                        ← This file
 
 | Version | Date | What Changed |
 |---------|------|-------------|
-| v3.0 | 2026-03-24 | New template with CC Prompt Panels, Decision Log, Acceptance Criteria, Anti-Vision List |
+| v3.2 | 2026-03-24 | VERCEL-OPS-CONTRACT.md + RUNBOOK-template.md + YAML block in BRIEF.md |
+| v3.1 | 2026-03-24 | Operations section in HTML (deploy, SLOs, incidents, third-parties, meta-contract) |
+| v3.0 | 2026-03-24 | CC Prompt Panels, Decision Log, Acceptance Criteria, Anti-Vision List |
 | v2.0 | 2026-03 | Operating Bible HTML template (template-only, no real content) |
 | v1.0 | 2026-02 | PocketPals v4 — first full Operating Bible in production |
