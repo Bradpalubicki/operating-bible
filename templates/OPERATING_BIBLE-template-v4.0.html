@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[APP NAME] — Operating Bible v[N]</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #2a2a2a;
+      --text: #e8e8e8;
+      --muted: #888;
+      --accent: #4f8ef7;
+      --green: #4ade80;
+      --yellow: #facc15;
+      --red: #f87171;
+      --orange: #fb923c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 14px; line-height: 1.6; }
+    .layout { display: flex; min-height: 100vh; }
+    nav { width: 260px; min-width: 260px; background: var(--surface); border-right: 1px solid var(--border); padding: 24px 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+    nav h2 { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 0 20px 8px; margin-top: 20px; }
+    nav h2:first-child { margin-top: 0; }
+    nav a { display: block; padding: 5px 20px; color: var(--muted); text-decoration: none; font-size: 12px; border-left: 2px solid transparent; transition: all .15s; }
+    nav a:hover, nav a.active { color: var(--text); border-left-color: var(--accent); background: rgba(79,142,247,.06); }
+    main { flex: 1; padding: 40px 60px; max-width: 1000px; }
+    section { margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+    section:last-child { border-bottom: none; }
+    h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+    h2 { font-size: 20px; font-weight: 600; margin-bottom: 16px; color: var(--accent); display: flex; align-items: center; gap: 8px; }
+    h2 .layer-badge { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: rgba(79,142,247,.15); color: var(--accent); padding: 2px 7px; border-radius: 4px; }
+    h3 { font-size: 14px; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
+    p { color: var(--muted); margin-bottom: 12px; }
+    .meta { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
+    .badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+    .badge-green { background: rgba(74,222,128,.12); color: var(--green); }
+    .badge-yellow { background: rgba(250,204,21,.12); color: var(--yellow); }
+    .badge-red { background: rgba(248,113,113,.12); color: var(--red); }
+    .badge-blue { background: rgba(79,142,247,.12); color: var(--accent); }
+    .badge-orange { background: rgba(251,146,60,.12); color: var(--orange); }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+    th { text-align: left; padding: 8px 12px; background: var(--surface); color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border); }
+    td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    code, pre { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 12px; }
+    pre { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; overflow-x: auto; margin: 12px 0; }
+    .placeholder { color: #555; font-style: italic; }
+    .score-bar { display: flex; align-items: center; gap: 12px; margin: 8px 0; }
+    .score-bar .fill { height: 6px; border-radius: 3px; background: var(--accent); }
+    .score-bar .track { height: 6px; border-radius: 3px; background: var(--border); flex: 1; }
+    .callout { background: var(--surface); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 12px 0; font-size: 13px; }
+    .callout.warn { border-left-color: var(--yellow); }
+    .callout.danger { border-left-color: var(--red); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+    ul { padding-left: 20px; color: var(--muted); margin: 8px 0; }
+    ul li { margin-bottom: 4px; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+    .dot-green { background: var(--green); }
+    .dot-yellow { background: var(--yellow); }
+    .dot-red { background: var(--red); }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .section-number { color: var(--muted); font-size: 12px; margin-right: 6px; }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SIDEBAR NAV
+══════════════════════════════════════════════════════════════════ -->
+<nav>
+  <h2>Layer 1 — Identity</h2>
+  <a href="#cover">#1 Cover</a>
+  <a href="#purpose">#2 Purpose</a>
+  <a href="#tech-stack">#3 Tech Stack</a>
+  <a href="#yaml-contract">#4 YAML Contract</a>
+
+  <h2>Layer 2 — Build</h2>
+  <a href="#build-sequence">#5 Build Sequence</a>
+  <a href="#api-routes">#6 API Routes</a>
+  <a href="#db-schema">#7 DB Schema</a>
+  <a href="#cron-jobs">#8 Cron Jobs</a>
+  <a href="#email-triggers">#9 Email Triggers</a>
+  <a href="#third-parties">#10 Third Parties</a>
+  <a href="#secrets-contract">#11 Secrets Contract</a>
+
+  <h2>Layer 3 — Operate</h2>
+  <a href="#deploy">#12 Deploy</a>
+  <a href="#slos">#13 SLOs</a>
+  <a href="#incidents">#14 Incidents</a>
+  <a href="#incident-runbooks">#15 Incident Runbooks</a>
+  <a href="#monitoring">#16 Monitoring</a>
+  <a href="#ci-cd-gates">#17 CI/CD Gates</a>
+  <a href="#dr-recovery">#18 DR Recovery</a>
+
+  <h2>Layer 4 — Compliance</h2>
+  <a href="#compliance-map">#19 Compliance Map</a>
+  <a href="#data-privacy">#20 Data Privacy</a>
+  <a href="#auth-spec">#21 Auth Spec</a>
+  <a href="#security">#22 Security</a>
+
+  <h2>Layer 5 — Product</h2>
+  <a href="#vision">#23 Vision</a>
+  <a href="#personas">#24 Personas</a>
+  <a href="#features">#25 Features</a>
+  <a href="#brand">#26 Brand</a>
+  <a href="#pricing">#27 Pricing</a>
+
+  <h2>Layer 6 — Business</h2>
+  <a href="#financials">#28 Financials</a>
+  <a href="#marketing">#29 Marketing</a>
+  <a href="#competitive">#30 Competitive</a>
+
+  <h2>Layer 7 — Process</h2>
+  <a href="#testing-strategy">#31 Testing Strategy</a>
+  <a href="#change-management">#32 Change Management</a>
+  <a href="#postmortem">#33 Postmortem</a>
+  <a href="#changelog">#34 Changelog</a>
+  <a href="#open-issues">#35 Open Issues</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════════════════════════════════ -->
+<main>
+
+  <!-- ─── COVER ─────────────────────────────────────────────── -->
+  <section id="cover">
+    <h1>[APP NAME]</h1>
+    <div class="meta">
+      <span class="badge badge-blue">Operating Bible v[N]</span>
+      <span class="badge badge-green">● Live</span>
+      <span class="badge badge-yellow">Score: 0/35</span>
+    </div>
+    <table>
+      <tr><th>Field</th><th>Value</th></tr>
+      <tr><td>App ID</td><td class="placeholder">app-shortname</td></tr>
+      <tr><td>Version</td><td class="placeholder">v[N] — [date]</td></tr>
+      <tr><td>Status</td><td class="placeholder">Live / Staging / In Development</td></tr>
+      <tr><td>Repo</td><td class="placeholder">github.com/Bradpalubicki/[repo-name]</td></tr>
+      <tr><td>Prod branch</td><td class="placeholder">main</td></tr>
+      <tr><td>Live URL</td><td class="placeholder">https://[app].vercel.app</td></tr>
+      <tr><td>Custom domain</td><td class="placeholder">https://[app.com] — or "none"</td></tr>
+      <tr><td>Bible score</td><td class="placeholder">0/35 — target 28/35</td></tr>
+      <tr><td>Last updated</td><td class="placeholder">2026-MM-DD</td></tr>
+      <tr><td>Updated by</td><td class="placeholder">Claude Code / Brad</td></tr>
+    </table>
+  </section>
+
+  <!-- ─── #1 PURPOSE ───────────────────────────────────────── -->
+  <section id="purpose">
+    <h2><span class="section-number">#2</span> Purpose <span class="layer-badge">Layer 1</span></h2>
+
+    <h3>One-line definition</h3>
+    <p class="placeholder">[App name] is the [what it does] for [who], so they can [outcome] without [pain it removes].</p>
+
+    <h3>The 1000-client test</h3>
+    <p class="placeholder">If 1,000 [target users] used this product tomorrow, what would each one do first? → [answer]. What would they come back for weekly? → [answer]. What would make them cancel? → [answer].</p>
+
+    <h3>What it is NOT</h3>
+    <ul>
+      <li class="placeholder">Not a [thing people might confuse it with]</li>
+      <li class="placeholder">Not a replacement for [adjacent tool]</li>
+      <li class="placeholder">Not targeting [excluded use case]</li>
+    </ul>
+
+    <h3>Anti-vision hard list</h3>
+    <div class="callout danger">
+      <p>CC must check this list before adding any feature. If it matches any item below — stop.</p>
+    </div>
+    <ul>
+      <li class="placeholder">No [specific feature that is out of scope]</li>
+      <li class="placeholder">No [integration that belongs in a different product]</li>
+      <li class="placeholder">No Layer 3 features on the dashboard (Month 1+ only)</li>
+    </ul>
+  </section>
+
+  <!-- ─── #3 TECH STACK ────────────────────────────────────── -->
+  <section id="tech-stack">
+    <h2><span class="section-number">#3</span> Tech Stack <span class="layer-badge">Layer 1</span></h2>
+
+    <h3>Runtime environment</h3>
+    <table>
+      <tr><th>Runtime</th><th>Version</th><th>Notes</th></tr>
+      <tr><td>Node.js</td><td class="placeholder">22.x</td><td class="placeholder">Specified in .nvmrc or package.json engines</td></tr>
+      <tr><td>TypeScript</td><td class="placeholder">5.x</td><td class="placeholder">strict mode enforced</td></tr>
+    </table>
+
+    <h3>Core framework</h3>
+    <table>
+      <tr><th>Package</th><th>Version</th><th>Purpose</th><th>Conflicts</th></tr>
+      <tr><td class="placeholder">next</td><td class="placeholder">15.x</td><td class="placeholder">App Router — Server Components default</td><td class="placeholder">None</td></tr>
+      <tr><td class="placeholder">react</td><td class="placeholder">19.x</td><td class="placeholder">UI</td><td class="placeholder">None</td></tr>
+    </table>
+
+    <h3>Database &amp; auth</h3>
+    <table>
+      <tr><th>Package</th><th>Version</th><th>Purpose</th></tr>
+      <tr><td class="placeholder">@supabase/supabase-js</td><td class="placeholder">2.x</td><td class="placeholder">DB client + RLS</td></tr>
+      <tr><td class="placeholder">drizzle-orm</td><td class="placeholder">0.x</td><td class="placeholder">ORM + migration runner</td></tr>
+      <tr><td class="placeholder">@clerk/nextjs</td><td class="placeholder">6.x</td><td class="placeholder">Auth — all protected routes</td></tr>
+    </table>
+
+    <h3>Payments</h3>
+    <table>
+      <tr><th>Package</th><th>Version</th><th>Purpose</th></tr>
+      <tr><td class="placeholder">squareup</td><td class="placeholder">latest</td><td class="placeholder">Primary payments SDK</td></tr>
+    </table>
+
+    <h3>UI &amp; forms</h3>
+    <table>
+      <tr><th>Package</th><th>Version</th><th>Purpose</th></tr>
+      <tr><td class="placeholder">tailwindcss</td><td class="placeholder">4.x</td><td class="placeholder">Styling</td></tr>
+      <tr><td class="placeholder">@shadcn/ui</td><td class="placeholder">latest</td><td class="placeholder">Component base</td></tr>
+      <tr><td class="placeholder">react-hook-form</td><td class="placeholder">7.x</td><td class="placeholder">All forms — never raw useState</td></tr>
+      <tr><td class="placeholder">zod</td><td class="placeholder">3.x</td><td class="placeholder">Schema validation — all API inputs</td></tr>
+    </table>
+
+    <h3>Key constraints</h3>
+    <ul>
+      <li class="placeholder">No raw useState for forms</li>
+      <li class="placeholder">No custom auth — Clerk only</li>
+      <li class="placeholder">No new Stripe integrations — Square is primary</li>
+      <li class="placeholder">[Any other hard constraints specific to this app]</li>
+    </ul>
+  </section>
+
+  <!-- ─── #4 YAML CONTRACT ─────────────────────────────────── -->
+  <section id="yaml-contract">
+    <h2><span class="section-number">#4</span> YAML Contract <span class="layer-badge">Layer 1</span></h2>
+    <div class="callout">
+      <p>CC copies this block to <code>.claude/BRIEF.md</code> at the start of every session. The YAML contract in this file must always match <code>.claude/BRIEF.md</code> exactly.</p>
+    </div>
+    <pre><code>app_bible_contract:
+  app_id: "app-shortname"
+  tier: "T0|T1|T2"
+  platform: "nextjs"
+  prod_branch: "main"
+  deploy_target: "vercel"
+  payments: "square|stripe|revenuecat|none"
+  auth: "clerk"
+  compliance: []          # e.g. ["HIPAA", "COPPA", "PCI"]
+  build_phase: "1-of-6"   # current micro-prompt number
+  permissions:
+    create_files: true
+    modify_schema: "migration-file-required"
+    push_to_main: false
+    install_packages: "ask-first"
+  frozen_files:
+    - "src/middleware.ts"  # list any files CC must not edit
+  active_session:
+    date: "2026-MM-DD"
+    task: "Description of current build task"
+    next_micro_prompt: 2
+    last_verified_commit: "abc1234"</code></pre>
+  </section>
+
+  <!-- ─── #5 BUILD SEQUENCE ────────────────────────────────── -->
+  <section id="build-sequence">
+    <h2><span class="section-number">#5</span> Build Sequence <span class="layer-badge">Layer 2</span></h2>
+    <div class="callout">
+      <p>Max 3 files per micro-prompt. Each prompt must pass <code>npx tsc --noEmit</code> before the next starts. Commit after each passing step.</p>
+    </div>
+
+    <h3>Micro-Prompt 1 — [Task name]</h3>
+    <table>
+      <tr><th>Field</th><th>Value</th></tr>
+      <tr><td>Files</td><td class="placeholder">src/file1.ts, src/file2.ts, src/file3.ts</td></tr>
+      <tr><td>What CC builds</td><td class="placeholder">Describe exactly what to create or modify</td></tr>
+      <tr><td>Acceptance criteria</td><td class="placeholder">tsc passes, [specific behavior], [specific test]</td></tr>
+      <tr><td>Commit message</td><td class="placeholder">feat(scope): description</td></tr>
+    </table>
+
+    <h3>Micro-Prompt 2 — [Task name]</h3>
+    <table>
+      <tr><th>Field</th><th>Value</th></tr>
+      <tr><td>Files</td><td class="placeholder">src/file4.ts, src/file5.ts</td></tr>
+      <tr><td>What CC builds</td><td class="placeholder">Describe exactly what to create or modify</td></tr>
+      <tr><td>Acceptance criteria</td><td class="placeholder">tsc passes, [specific behavior]</td></tr>
+      <tr><td>Commit message</td><td class="placeholder">feat(scope): description</td></tr>
+    </table>
+
+    <p class="placeholder">Add one block per micro-prompt. Do not pre-write more than 6 prompts — the spec will shift after each verification.</p>
+  </section>
+
+  <!-- ─── #6 API ROUTES ────────────────────────────────────── -->
+  <section id="api-routes">
+    <h2><span class="section-number">#6</span> API Routes <span class="layer-badge">Layer 2</span></h2>
+
+    <h3>Auth routes</h3>
+    <table>
+      <tr><th>Method</th><th>Path</th><th>Auth</th><th>Request body</th><th>Response</th><th>Purpose</th></tr>
+      <tr>
+        <td class="placeholder">POST</td>
+        <td class="placeholder">/api/auth/callback</td>
+        <td class="placeholder">None</td>
+        <td class="placeholder">–</td>
+        <td class="placeholder">{ redirect: string }</td>
+        <td class="placeholder">Clerk webhook callback</td>
+      </tr>
+    </table>
+
+    <h3>[Feature] routes</h3>
+    <table>
+      <tr><th>Method</th><th>Path</th><th>Auth</th><th>Request body</th><th>Response</th><th>Purpose</th></tr>
+      <tr>
+        <td class="placeholder">GET</td>
+        <td class="placeholder">/api/[resource]</td>
+        <td class="placeholder">Clerk session</td>
+        <td class="placeholder">–</td>
+        <td class="placeholder">{ items: Item[] }</td>
+        <td class="placeholder">List all resources for authenticated user</td>
+      </tr>
+      <tr>
+        <td class="placeholder">POST</td>
+        <td class="placeholder">/api/[resource]</td>
+        <td class="placeholder">Clerk session</td>
+        <td class="placeholder">{ name: string, ... }</td>
+        <td class="placeholder">{ id: string }</td>
+        <td class="placeholder">Create resource</td>
+      </tr>
+      <tr>
+        <td class="placeholder">PATCH</td>
+        <td class="placeholder">/api/[resource]/[id]</td>
+        <td class="placeholder">Clerk session + owner check</td>
+        <td class="placeholder">Partial resource fields</td>
+        <td class="placeholder">{ success: true }</td>
+        <td class="placeholder">Update resource — verify ownership before update</td>
+      </tr>
+      <tr>
+        <td class="placeholder">DELETE</td>
+        <td class="placeholder">/api/[resource]/[id]</td>
+        <td class="placeholder">Clerk session + owner check</td>
+        <td class="placeholder">–</td>
+        <td class="placeholder">{ success: true }</td>
+        <td class="placeholder">Soft delete — set deleted_at, never hard delete</td>
+      </tr>
+    </table>
+
+    <h3>Webhook routes</h3>
+    <table>
+      <tr><th>Method</th><th>Path</th><th>Auth</th><th>Purpose</th></tr>
+      <tr>
+        <td class="placeholder">POST</td>
+        <td class="placeholder">/api/webhooks/[provider]</td>
+        <td class="placeholder">Signature header</td>
+        <td class="placeholder">Handle [provider] events</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- ─── #7 DB SCHEMA ─────────────────────────────────────── -->
+  <section id="db-schema">
+    <h2><span class="section-number">#7</span> DB Schema <span class="layer-badge">Layer 2</span></h2>
+
+    <h3>Migrations (in order)</h3>
+    <table>
+      <tr><th>File</th><th>Date</th><th>What it creates</th><th>Status</th></tr>
+      <tr>
+        <td class="placeholder">0001_initial.sql</td>
+        <td class="placeholder">2026-MM-DD</td>
+        <td class="placeholder">users, sessions</td>
+        <td><span class="badge badge-green">Applied</span></td>
+      </tr>
+      <tr>
+        <td class="placeholder">0002_[feature].sql</td>
+        <td class="placeholder">2026-MM-DD</td>
+        <td class="placeholder">[table names]</td>
+        <td><span class="badge badge-yellow">Pending</span></td>
+      </tr>
+    </table>
+
+    <h3>Table: [table_name]</h3>
+    <table>
+      <tr><th>Column</th><th>Type</th><th>Nullable</th><th>FK</th><th>Purpose</th></tr>
+      <tr>
+        <td class="placeholder">id</td>
+        <td class="placeholder">serial PRIMARY KEY</td>
+        <td class="placeholder">No</td>
+        <td class="placeholder">–</td>
+        <td class="placeholder">Auto-increment PK</td>
+      </tr>
+      <tr>
+        <td class="placeholder">clerk_user_id</td>
+        <td class="placeholder">varchar(255)</td>
+        <td class="placeholder">No</td>
+        <td class="placeholder">–</td>
+        <td class="placeholder">Links to Clerk — never FK to a users table</td>
+      </tr>
+      <tr>
+        <td class="placeholder">created_at</td>
+        <td class="placeholder">timestamptz</td>
+        <td class="placeholder">No</td>
+        <td class="placeholder">–</td>
+        <td class="placeholder">DEFAULT now()</td>
+      </tr>
+    </table>
+    <div class="callout">
+      <p><strong>RLS policy:</strong> <span class="placeholder">Enable row security. Policy: users can only SELECT/UPDATE/DELETE rows where clerk_user_id = requesting_user_id().</span></p>
+    </div>
+
+    <p class="placeholder">Repeat the table block above for every table in the schema.</p>
+  </section>
+
+  <!-- ─── #8 CRON JOBS ─────────────────────────────────────── -->
+  <section id="cron-jobs">
+    <h2><span class="section-number">#8</span> Cron Jobs <span class="layer-badge">Layer 2</span></h2>
+    <table>
+      <tr><th>Name</th><th>Schedule</th><th>Route</th><th>Purpose</th><th>If it fails</th><th>Status</th></tr>
+      <tr>
+        <td class="placeholder">daily-sync</td>
+        <td class="placeholder">0 6 * * *</td>
+        <td class="placeholder">/api/cron/daily-sync</td>
+        <td class="placeholder">Sync external data to DB</td>
+        <td class="placeholder">Stale data — users see yesterday's numbers</td>
+        <td><span class="badge badge-green">Live</span></td>
+      </tr>
+      <tr>
+        <td class="placeholder">[job-name]</td>
+        <td class="placeholder">[cron expression]</td>
+        <td class="placeholder">[route path]</td>
+        <td class="placeholder">[what it does]</td>
+        <td class="placeholder">[user-visible impact]</td>
+        <td><span class="badge badge-yellow">Stub</span></td>
+      </tr>
+    </table>
+    <div class="callout warn">
+      <p>All cron routes must validate <code>CRON_SECRET</code> header before executing. Never expose cron routes without auth.</p>
+    </div>
+  </section>
+
+  <!-- ─── #9 EMAIL TRIGGERS ────────────────────────────────── -->
+  <section id="email-triggers">
+    <h2><span class="section-number">#9</span> Email Triggers <span class="layer-badge">Layer 2</span></h2>
+    <table>
+      <tr><th>Trigger event</th><th>Template</th><th>Recipient</th><th>Subject</th><th>Status</th></tr>
+      <tr>
+        <td class="placeholder">user.signup</td>
+        <td class="placeholder">welcome.tsx</td>
+        <td class="placeholder">New user</td>
+        <td class="placeholder">Welcome to [App]</td>
+        <td><span class="badge badge-green">Live</span></td>
+      </tr>
+      <tr>
+        <td class="placeholder">[event]</td>
+        <td class="placeholder">[template file]</td>
+        <td class="placeholder">[recipient]</td>
+        <td class="placeholder">[subject line]</td>
+        <td><span class="badge badge-red">Missing</span></td>
+      </tr>
+    </table>
+    <p class="placeholder">Email provider: Resend. Templates in src/emails/. Triggered via Server Actions or API routes.</p>
+  </section>
+
+  <!-- ─── #10 THIRD PARTIES ────────────────────────────────── -->
+  <section id="third-parties">
+    <h2><span class="section-number">#10</span> Third Parties <span class="layer-badge">Layer 2</span></h2>
+    <table>
+      <tr><th>Service</th><th>Purpose</th><th>Env var(s)</th><th>Rate limit</th><th>If it fails</th><th>Credential owner</th></tr>
+      <tr>
+        <td class="placeholder">Clerk</td>
+        <td class="placeholder">Auth</td>
+        <td class="placeholder">CLERK_SECRET_KEY, NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY</td>
+        <td class="placeholder">–</td>
+        <td class="placeholder">All auth fails — app unusable</td>
+        <td class="placeholder">Brad / NuStack</td>
+      </tr>
+      <tr>
+        <td class="placeholder">Supabase</td>
+        <td class="placeholder">DB</td>
+        <td class="placeholder">DATABASE_URL</td>
+        <td class="placeholder">–</td>
+        <td class="placeholder">All DB operations fail</td>
+        <td class="placeholder">Brad / NuStack</td>
+      </tr>
+      <tr>
+        <td class="placeholder">[Service]</td>
+        <td class="placeholder">[what it does]</td>
+        <td class="placeholder">[env vars]</td>
+        <td class="placeholder">[calls/day or req/sec]</td>
+        <td class="placeholder">[degraded behavior]</td>
+        <td class="placeholder">[who owns the credentials]</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- ─── #11 SECRETS CONTRACT ─────────────────────────────── -->
+  <section id="secrets-contract">
+    <h2><span class="section-number">#11</span> Secrets Contract <span class="layer-badge">Layer 2</span></h2>
+    <div class="callout danger">
+      <p>Never commit secrets. Never hardcode secrets. Never log secrets. Any <code>sk_test_</code> or <code>pk_test_</code> key in production = SEV 1 incident.</p>
+    </div>
+    <table>
+      <tr><th>Env var</th><th>Location</th><th>Purpose</th><th>Owner</th><th>Rotation</th><th>If missing</th></tr>
+      <tr>
+        <td class="placeholder">DATABASE_URL</td>
+        <td class="placeholder">Vercel + .env.local</td>
+        <td class="placeholder">Supabase connection string</td>
+        <td class="placeholder">Brad</td>
+        <td class="placeholder">On breach only</td>
+        <td class="placeholder">All DB ops fail — app crashes</td>
+      </tr>
+      <tr>
+        <td class="placeholder">CLERK_SECRET_KEY</td>
+        <td class="placeholder">Vercel + .env.local</td>
+        <td class="placeholder">Clerk server-side auth</td>
+        <td class="placeholder">Brad</td>
+        <td class="placeholder">Annually</td>
+        <td class="placeholder">Auth fails — app unusable</td>
+      </tr>
+      <tr>
+        <td class="placeholder">[KEY_NAME]</td>
+        <td class="placeholder">Vercel Production</td>
+        <td class="placeholder">[purpose]</td>
+        <td class="placeholder">[owner]</td>
+        <td class="placeholder">[rotation frequency]</td>
+        <td class="placeholder">[failure mode]</td>
+      </tr>
+    </table>
+    <h3>Flags</h3>
+    <ul>
+      <li class="placeholder">⚠️ [KEY_NAME] is currently a TEST key — must rotate to live before [date]</li>
+      <li class="placeholder">⚠️ [KEY_NAME] is a placeholder — integration not yet implemented</li>
+    </ul>
+  </section>
+
+  <!-- ─── #12 DEPLOY ───────────────────────────────────────── -->
+  <section id="deploy">
+    <h2><span class="section-number">#12</span> Deploy <span class="layer-badge">Layer 3</span></h2>
+
+    <h3>Standard deploy</h3>
+    <pre><code># 1. Verify build passes locally
+npm run build && npm run lint
+
+# 2. Commit and push to main
+git add [files]
+git commit -m "feat(scope): description"
+git push origin main
+
+# Vercel auto-deploys from main — no manual trigger needed
+# Monitor: https://vercel.com/nustack-digital-ventures/[project]/deployments</code></pre>
+
+    <h3>DB migration before deploy</h3>
+    <pre><code># Run before pushing if schema changed
+npx drizzle-kit push
+# or
+npx drizzle-kit migrate</code></pre>
+
+    <h3>Rollback procedure</h3>
+    <pre><code># Option 1 — Vercel instant rollback (UI)
+# Vercel dashboard → Deployments → previous deploy → Promote to Production
+
+# Option 2 — Git revert
+git revert HEAD
+git push origin main</code></pre>
+
+    <h3>Deploy access</h3>
+    <table>
+      <tr><th>Person</th><th>Can deploy to prod?</th><th>Method</th></tr>
+      <tr><td class="placeholder">Brad</td><td class="placeholder">Yes</td><td class="placeholder">push to main</td></tr>
+      <tr><td class="placeholder">CC (Claude Code)</td><td class="placeholder">Yes — with Brad approval</td><td class="placeholder">push to main after build passes</td></tr>
+    </table>
+  </section>
+
+  <!-- ─── #13 SLOs ─────────────────────────────────────────── -->
+  <section id="slos">
+    <h2><span class="section-number">#13</span> SLOs <span class="layer-badge">Layer 3</span></h2>
+    <table>
+      <tr><th>SLI</th><th>Target</th><th>Alert threshold</th><th>Measurement</th></tr>
+      <tr>
+        <td class="placeholder">API response time (p95)</td>
+        <td class="placeholder">&lt; 800ms</td>
+        <td class="placeholder">&gt; 2000ms</td>
+        <td class="placeholder">Vercel analytics</td>
+      </tr>
+      <tr>
+        <td class="placeholder">Uptime</td>
+        <td class="placeholder">99.5%</td>
+        <td class="placeholder">&lt; 99%</td>
+        <td class="placeholder">Vercel / Better Stack</td>
+      </tr>
+      <tr>
+        <td class="placeholder">Error rate</td>
+        <td class="placeholder">&lt; 1%</td>
+        <td class="placeholder">&gt; 5%</td>
+        <td class="placeholder">Sentry error rate</td>
+      </tr>
+      <tr>
+        <td class="placeholder">[Critical endpoint] success rate</td>
+        <td class="placeholder">99.9%</td>
+        <td class="placeholder">&lt; 99%</td>
+        <td class="placeholder">Custom metric in Sentry</td>
+      </tr>
+    </table>
+    <h3>What "working" means</h3>
+    <ul>
+      <li class="placeholder">User can sign in and reach dashboard in &lt; 3 seconds</li>
+      <li class="placeholder">[Core action] completes successfully</li>
+      <li class="placeholder">No Sentry errors in the last 15 minutes</li>
+    </ul>
+  </section>
+
+  <!-- ─── #14 INCIDENTS ────────────────────────────────────── -->
+  <section id="incidents">
+    <h2><span class="section-number">#14</span> Incidents <span class="layer-badge">Layer 3</span></h2>
+    <table>
+      <tr><th>Severity</th><th>Definition</th><th>Example</th><th>Immediate action</th><th>Escalation</th></tr>
+      <tr>
+        <td><span class="badge badge-red">SEV 0</span></td>
+        <td class="placeholder">App completely down. Data loss occurring or imminent.</td>
+        <td class="placeholder">DB connection lost. Payments failing for all users.</td>
+        <td class="placeholder">Rollback immediately. Brad paged.</td>
+        <td class="placeholder">Brad + Vercel support</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-orange">SEV 1</span></td>
+        <td class="placeholder">Critical feature broken. Revenue impacted.</td>
+        <td class="placeholder">Checkout broken. Auth loop. Key cron failing.</td>
+        <td class="placeholder">Fix or disable feature. Alert Brad.</td>
+        <td class="placeholder">Brad</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-yellow">SEV 2</span></td>
+        <td class="placeholder">Non-critical feature broken. Workaround exists.</td>
+        <td class="placeholder">Export broken. One dashboard tab errors.</td>
+        <td class="placeholder">Log to Linear. Fix in next session.</td>
+        <td class="placeholder">Linear issue</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-blue">SEV 3</span></td>
+        <td class="placeholder">Cosmetic or minor UX issue.</td>
+        <td class="placeholder">Wrong label. Slow page load. Missing icon.</td>
+        <td class="placeholder">Log to Linear backlog.</td>
+        <td class="placeholder">Linear backlog</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- ─── #15 INCIDENT RUNBOOKS ────────────────────────────── -->
+  <section id="incident-runbooks">
+    <h2><span class="section-number">#15</span> Incident Runbooks <span class="layer-badge">Layer 3</span></h2>
+
+    <h3>Runbook 1 — [Scenario: e.g. "DB connection lost"]</h3>
+    <table>
+      <tr><th>Step</th><th>Action</th></tr>
+      <tr><td>Symptom</td><td class="placeholder">All API routes returning 500. Sentry shows "Connection refused" errors.</td></tr>
+      <tr><td>Diagnose</td><td class="placeholder">Check Supabase dashboard → project status. Check DATABASE_URL in Vercel env.</td></tr>
+      <tr><td>Fix</td><td class="placeholder">If Supabase paused: restore project. If env var wrong: update in Vercel and redeploy.</td></tr>
+      <tr><td>Verify</td><td class="placeholder">Hit /api/health — should return 200. Check Sentry — errors should stop.</td></tr>
+      <tr><td>Post-incident</td><td class="placeholder">Write postmortem. Add monitoring alert to prevent recurrence.</td></tr>
+    </table>
+
+    <h3>Runbook 2 — [Scenario: e.g. "Auth loop / users can't sign in"]</h3>
+    <table>
+      <tr><th>Step</th><th>Action</th></tr>
+      <tr><td>Symptom</td><td class="placeholder">Users redirected in loop on login. Clerk dashboard shows errors.</td></tr>
+      <tr><td>Diagnose</td><td class="placeholder">Check CLERK_SECRET_KEY matches Clerk dashboard. Check middleware.ts config.</td></tr>
+      <tr><td>Fix</td><td class="placeholder">Rotate key if compromised. Redeploy. Clear Clerk session cache if needed.</td></tr>
+      <tr><td>Verify</td><td class="placeholder">Sign in with test account. Confirm dashboard loads.</td></tr>
+      <tr><td>Post-incident</td><td class="placeholder">Document in postmortem log.</td></tr>
+    </table>
+
+    <p class="placeholder">Add runbooks for the top 5 failure scenarios for this app. At minimum: DB down, auth failure, payment failure, cron failure, deploy failure.</p>
+  </section>
+
+  <!-- ─── #16 MONITORING ───────────────────────────────────── -->
+  <section id="monitoring">
+    <h2><span class="section-number">#16</span> Monitoring <span class="layer-badge">Layer 3</span></h2>
+
+    <h3>What is instrumented</h3>
+    <table>
+      <tr><th>Tool</th><th>What it covers</th><th>DSN / location</th><th>Status</th></tr>
+      <tr>
+        <td class="placeholder">Sentry</td>
+        <td class="placeholder">Server errors, unhandled exceptions, API failures</td>
+        <td class="placeholder">SENTRY_DSN in Vercel env — sentry.io/nustack/[project]</td>
+        <td><span class="badge badge-green">Live</span></td>
+      </tr>
+      <tr>
+        <td class="placeholder">Vercel Analytics</td>
+        <td class="placeholder">Page performance, Web Vitals</td>
+        <td class="placeholder">Auto — vercel.com/[project]/analytics</td>
+        <td><span class="badge badge-green">Live</span></td>
+      </tr>
+      <tr>
+        <td class="placeholder">[Tool]</td>
+        <td class="placeholder">[what it covers]</td>
+        <td class="placeholder">[where to find it]</td>
+        <td><span class="badge badge-red">Missing</span></td>
+      </tr>
+    </table>
+
+    <h3>What is NOT monitored yet</h3>
+    <ul>
+      <li class="placeholder">Cron job success/failure — no alerting if job silently fails</li>
+      <li class="placeholder">DB query performance — no slow query tracking</li>
+      <li class="placeholder">[Other gaps]</li>
+    </ul>
+  </section>
+
+  <!-- ─── #17 CI/CD GATES ──────────────────────────────────── -->
+  <section id="ci-cd-gates">
+    <h2><span class="section-number">#17</span> CI/CD Gates <span class="layer-badge">Layer 3</span></h2>
+    <table>
+      <tr><th>Workflow file</th><th>Trigger</th><th>Gates</th><th>Blocks deploy?</th></tr>
+      <tr>
+        <td class="placeholder">.github/workflows/ci.yml</td>
+        <td class="placeholder">push to main, PR to main</td>
+        <td class="placeholder">tsc, lint, tests</td>
+        <td class="placeholder">Yes — Vercel deploy blocked if gates fail</td>
+      </tr>
+    </table>
+    <h3>Definition of Done (per feature)</h3>
+    <ul>
+      <li class="placeholder"><code>npm run build</code> passes — zero type errors</li>
+      <li class="placeholder"><code>npm run lint</code> passes — zero lint warnings</li>
+      <li class="placeholder">All existing tests pass</li>
+      <li class="placeholder">New feature has at least one test</li>
+      <li class="placeholder">Sentry not showing new errors after deploy</li>
+      <li class="placeholder">Committed and pushed to main</li>
+    </ul>
+  </section>
+
+  <!-- ─── #18 DR RECOVERY ──────────────────────────────────── -->
+  <section id="dr-recovery">
+    <h2><span class="section-number">#18</span> DR Recovery <span class="layer-badge">Layer 3</span></h2>
+    <table>
+      <tr><th>Field</th><th>Value</th></tr>
+      <tr><td>Backup schedule</td><td class="placeholder">Supabase auto-backup — daily, 7-day retention (Pro plan)</td></tr>
+      <tr><td>Backup location</td><td class="placeholder">Supabase dashboard → project → Database → Backups</td></tr>
+      <tr><td>RTO target</td><td class="placeholder">4 hours — app restored and serving traffic</td></tr>
+      <tr><td>RPO target</td><td class="placeholder">24 hours — maximum data loss acceptable</td></tr>
+      <tr><td>Worst case data loss</td><td class="placeholder">Up to 24 hours of user data if daily backup is the last restore point</td></tr>
+    </table>
+    <h3>Restore procedure</h3>
+    <pre><code># 1. Go to Supabase dashboard → [project] → Database → Backups
+# 2. Select most recent backup before incident
+# 3. Click "Restore" — confirm project name
+# 4. Wait ~30 min for restoration
+# 5. Re-run any migrations applied after backup date
+# 6. Verify with: npx drizzle-kit check
+# 7. Redeploy app to pick up restored DB</code></pre>
+  </section>
+
+  <!-- ─── #19 COMPLIANCE MAP ───────────────────────────────── -->
+  <section id="compliance-map">
+    <h2><span class="section-number">#19</span> Compliance Map <span class="layer-badge">Layer 4</span></h2>
+    <div class="callout">
+      <p>Every regulatory requirement mapped to the code that satisfies it. Gaps must be linked to a Linear issue.</p>
+    </div>
+    <table>
+      <tr><th>Regulation</th><th>Requirement</th><th>Code that satisfies it</th><th>Status</th><th>Gap issue</th></tr>
+      <tr>
+        <td class="placeholder">GDPR / CCPA</td>
+        <td class="placeholder">Data deletion on request</td>
+        <td class="placeholder">src/app/api/account/delete/route.ts</td>
+        <td><span class="badge badge-green">Satisfied</span></td>
+        <td class="placeholder">–</td>
+      </tr>
+      <tr>
+        <td class="placeholder">GDPR / CCPA</td>
+        <td class="placeholder">Privacy policy published</td>
+        <td class="placeholder">src/app/privacy/page.tsx</td>
+        <td><span class="badge badge-yellow">Partial</span></td>
+        <td class="placeholder"><a href="https://linear.app" class="placeholder">NUS-XXX</a></td>
+      </tr>
+      <tr>
+        <td class="placeholder">[Regulation]</td>
+        <td class="placeholder">[requirement]</td>
+        <td class="placeholder">[file or "not implemented"]</td>
+        <td><span class="badge badge-red">Gap</span></td>
+        <td class="placeholder"><a href="https://linear.app" class="placeholder">NUS-XXX</a></td>
+      </tr>
+    </table>
+    <p class="placeholder">Applicable regulations: <strong>[list regulations — e.g. GDPR, CCPA, COPPA, HIPAA, PCI-DSS, TCPA]</strong>. Mark any that do NOT apply and why.</p>
+  </section>
+
+  <!-- ─── #20 DATA PRIVACY ─────────────────────────────────── -->
+  <section id="data-privacy">
+    <h2><span class="section-number">#20</span> Data Privacy <span class="layer-badge">Layer 4</span></h2>
+    <table>
+      <tr><th>Data type</th><th>Why collected</th><th>Retention</th><th>Deletion procedure</th></tr>
+      <tr>
+        <td class="placeholder">Email address</td>
+        <td class="placeholder">Account auth and notifications</td>
+        <td class="placeholder">Account lifetime</td>
+        <td class="placeholder">Deleted via account delete endpoint + Clerk</td>
+      </tr>
+      <tr>
+        <td class="placeholder">Usage events</td>
+        <td class="placeholder">Analytics, product improvement</td>
+        <td class="placeholder">90 days</td>
+        <td class="placeholder">Purged by cron job</td>
+      </tr>
+      <tr>
+        <td class="placeholder">[Data type]</td>
+        <td class="placeholder">[why needed]</td>
+        <td class="placeholder">[retention period]</td>
+        <td class="placeholder">[how deleted on request]</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- ─── #21 AUTH SPEC ────────────────────────────────────── -->
+  <section id="auth-spec">
+    <h2><span class="section-number">#21</span> Auth Spec <span class="layer-badge">Layer 4</span></h2>
+    <h3>Provider</h3>
+    <p class="placeholder">Clerk. All authentication flows use Clerk. No custom auth. No session tokens stored in DB.</p>
+
+    <h3>Roles &amp; permissions matrix</h3>
+    <table>
+      <tr><th>Role</th><th>Can read</th><th>Can write</th><th>Can delete</th><th>Admin features</th></tr>
+      <tr>
+        <td class="placeholder">user</td>
+        <td class="placeholder">Own data only</td>
+        <td class="placeholder">Own data only</td>
+        <td class="placeholder">Own data only</td>
+        <td class="placeholder">None</td>
+      </tr>
+      <tr>
+        <td class="placeholder">admin</td>
+        <td class="placeholder">All data</td>
+        <td class="placeholder">All data</td>
+        <td class="placeholder">Soft delete only</td>
+        <td class="placeholder">Dashboard, user management</td>
+      </tr>
+    </table>
+
+    <h3>Session policy</h3>
+    <ul>
+      <li class="placeholder">Session duration: [X hours / days]</li>
+      <li class="placeholder">Refresh: automatic via Clerk</li>
+      <li class="placeholder">Revocation: via Clerk dashboard → Sessions</li>
+    </ul>
+
+    <h3>Protected routes</h3>
+    <pre><code>// middleware.ts — protected paths
+export const config = {
+  matcher: ['/dashboard/:path*', '/api/:path*'],
+}
+// Public paths (no auth required):
+// /, /sign-in, /sign-up, /api/webhooks/:path*</code></pre>
+  </section>
+
+  <!-- ─── #22 SECURITY ─────────────────────────────────────── -->
+  <section id="security">
+    <h2><span class="section-number">#22</span> Security <span class="layer-badge">Layer 4</span></h2>
+    <table>
+      <tr><th>OWASP Category</th><th>Mitigation</th><th>Status</th></tr>
+      <tr><td>Injection (SQL)</td><td class="placeholder">Drizzle ORM parameterized queries — no raw SQL with user input</td><td><span class="badge badge-green">Mitigated</span></td></tr>
+      <tr><td>Broken Auth</td><td class="placeholder">Clerk handles all auth — no custom session tokens</td><td><span class="badge badge-green">Mitigated</span></td></tr>
+      <tr><td>XSS</td><td class="placeholder">React auto-escapes — no dangerouslySetInnerHTML</td><td><span class="badge badge-green">Mitigated</span></td></tr>
+      <tr><td>IDOR</td><td class="placeholder">Every API route verifies data ownership before operation</td><td><span class="badge badge-yellow">Partial</span></td></tr>
+      <tr><td>Security Misconfiguration</td><td class="placeholder">All secrets in Vercel env — no .env committed, no hardcoded keys</td><td><span class="badge badge-green">Mitigated</span></td></tr>
+      <tr><td>Vulnerable Dependencies</td><td class="placeholder">Dependabot enabled. npm audit runs in CI.</td><td><span class="badge badge-yellow">Partial</span></td></tr>
+    </table>
+    <h3>Known vulnerabilities</h3>
+    <ul>
+      <li class="placeholder">None at time of last audit (2026-MM-DD)</li>
+      <li class="placeholder">[Or list any known issues with Linear links]</li>
+    </ul>
+  </section>
+
+  <!-- ─── #23 VISION ───────────────────────────────────────── -->
+  <section id="vision">
+    <h2><span class="section-number">#23</span> Vision <span class="layer-badge">Layer 5</span></h2>
+    <h3>What it is</h3>
+    <p class="placeholder">[2-3 sentences on what the product is and why it exists. Who it is for. What life looks like for the user after they use it successfully.]</p>
+
+    <h3>Why now</h3>
+    <p class="placeholder">[What has changed in the market that makes this the right time to build this. Specific trend, technology shift, or competitor gap.]</p>
+
+    <h3>Anti-vision</h3>
+    <p class="placeholder">[What this product will never be. Be specific. "Not an enterprise product." "Not a marketplace." "Not a social network."]</p>
+  </section>
+
+  <!-- ─── #24 PERSONAS ─────────────────────────────────────── -->
+  <section id="personas">
+    <h2><span class="section-number">#24</span> Personas <span class="layer-badge">Layer 5</span></h2>
+
+    <div class="two-col">
+      <div class="card">
+        <h3>[Persona 1 Name — e.g. "The Solo Operator"]</h3>
+        <p class="placeholder"><strong>Who:</strong> [description]</p>
+        <p class="placeholder"><strong>Goal:</strong> [what they're trying to accomplish]</p>
+        <p class="placeholder"><strong>Pain:</strong> [what frustrates them today]</p>
+        <p class="placeholder"><strong>Needs from this product:</strong> [list]</p>
+        <p class="placeholder"><strong>Hates:</strong> [what would make them leave]</p>
+      </div>
+      <div class="card">
+        <h3>[Persona 2 Name]</h3>
+        <p class="placeholder"><strong>Who:</strong> [description]</p>
+        <p class="placeholder"><strong>Goal:</strong> [what they're trying to accomplish]</p>
+        <p class="placeholder"><strong>Pain:</strong> [what frustrates them today]</p>
+        <p class="placeholder"><strong>Needs from this product:</strong> [list]</p>
+        <p class="placeholder"><strong>Hates:</strong> [what would make them leave]</p>
+      </div>
+    </div>
+
+    <h3>Audience map (SEO / CRO / Retention)</h3>
+    <table>
+      <tr><th>Audience</th><th>How they arrive</th><th>What they need first</th><th>What keeps them</th></tr>
+      <tr>
+        <td class="placeholder">Google crawler</td>
+        <td class="placeholder">Search</td>
+        <td class="placeholder">Structured data, H1, title tag</td>
+        <td class="placeholder">Fresh content, Core Web Vitals &lt; 2.5s</td>
+      </tr>
+      <tr>
+        <td class="placeholder">Cold visitor</td>
+        <td class="placeholder">Paid ad / referral</td>
+        <td class="placeholder">Hero that answers "what is this"</td>
+        <td class="placeholder">CTA above fold, social proof</td>
+      </tr>
+      <tr>
+        <td class="placeholder">Returning user</td>
+        <td class="placeholder">Direct / bookmark</td>
+        <td class="placeholder">Fast path to [primary action]</td>
+        <td class="placeholder">Progress, streaks, notifications</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- ─── #25 FEATURES ─────────────────────────────────────── -->
+  <section id="features">
+    <h2><span class="section-number">#25</span> Features <span class="layer-badge">Layer 5</span></h2>
+
+    <h3>Layer 1 — Day 1 (always visible)</h3>
+    <table>
+      <tr><th>Feature</th><th>Acceptance criteria</th><th>Status</th></tr>
+      <tr>
+        <td class="placeholder">[Feature name]</td>
+        <td class="placeholder">User can [action] and sees [result] within [time]</td>
+        <td><span class="badge badge-green">Built</span></td>
+      </tr>
+      <tr>
+        <td class="placeholder">[Feature name]</td>
+        <td class="placeholder">[criteria]</td>
+        <td><span class="badge badge-yellow">Partial</span></td>
+      </tr>
+    </table>
+
+    <h3>Layer 2 — Week 1 (in nav)</h3>
+    <table>
+      <tr><th>Feature</th><th>Acceptance criteria</th><th>Status</th></tr>
+      <tr>
+        <td class="placeholder">[Feature name]</td>
+        <td class="placeholder">[criteria]</td>
+        <td><span class="badge badge-red">Not built</span></td>
+      </tr>
+    </table>
+
+    <h3>Layer 3 — Month 1+ (hidden until asked)</h3>
+    <table>
+      <tr><th>Feature</th><th>Rationale</th><th>Status</th></tr>
+      <tr>
+        <td class="placeholder">[Feature name]</td>
+        <td class="placeholder">Power user feature — don't surface until Layer 1+2 are solid</td>
+        <td><span class="badge badge-red">Deferred</span></td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- ─── #26 BRAND ────────────────────────────────────────── -->
+  <section id="brand">
+    <h2><span class="section-number">#26</span> Brand <span class="layer-badge">Layer 5</span></h2>
+    <table>
+      <tr><th>Element</th><th>Value</th><th>DO NOT deviate</th></tr>
+      <tr><td>Primary color</td><td class="placeholder">#[hex] — [name]</td><td class="placeholder">Yes — use exact hex</td></tr>
+      <tr><td>Background</td><td class="placeholder">#[hex]</td><td class="placeholder">Yes</td></tr>
+      <tr><td>Text primary</td><td class="placeholder">#[hex]</td><td class="placeholder">Yes</td></tr>
+      <tr><td>Heading font</td><td class="placeholder">[Font name] — weight [N]</td><td class="placeholder">Yes</td></tr>
+      <tr><td>Body font</td><td class="placeholder">[Font name] — weight 400</td><td class="placeholder">Yes</td></tr>
+      <tr><td>Border radius</td><td class="placeholder">[N]px — used on all cards and inputs</td><td class="placeholder">Yes</td></tr>
+      <tr><td>Logo file</td><td class="placeholder">public/logo.svg</td><td class="placeholder">Yes</td></tr>
+    </table>
+    <h3>Voice</h3>
+    <p class="placeholder">[2-3 sentences on how the product sounds. "Direct and confident. No jargon. Speaks to the user like a smart peer, not a brand."</p>
+    <h3>DO NOT rules</h3>
+    <ul>
+      <li class="placeholder">Never use [color] outside its designated role</li>
+      <li class="placeholder">Never add emojis to UI unless explicitly in brand guidelines</li>
+      <li class="placeholder">Never change border radius on existing components</li>
+    </ul>
+  </section>
+
+  <!-- ─── #27 PRICING ──────────────────────────────────────── -->
+  <section id="pricing">
+    <h2><span class="section-number">#27</span> Pricing <span class="layer-badge">Layer 5</span></h2>
+    <table>
+      <tr><th>Tier</th><th>Price</th><th>Includes</th><th>Billing provider</th></tr>
+      <tr>
+        <td class="placeholder">Free</td>
+        <td class="placeholder">$0/mo</td>
+        <td class="placeholder">[features list]</td>
+        <td class="placeholder">N/A</td>
+      </tr>
+      <tr>
+        <td class="placeholder">Pro</td>
+        <td class="placeholder">$[X]/mo</td>
+        <td class="placeholder">[features list]</td>
+        <td class="placeholder">Square / Stripe</td>
+      </tr>
+    </table>
+    <h3>Billing webhook events handled</h3>
+    <ul>
+      <li class="placeholder"><code>payment.completed</code> → upgrade user to Pro tier</li>
+      <li class="placeholder"><code>subscription.cancelled</code> → downgrade to Free</li>
+      <li class="placeholder"><code>payment.failed</code> → send dunning email</li>
+    </ul>
+  </section>
+
+  <!-- ─── #28 FINANCIALS ───────────────────────────────────── -->
+  <section id="financials">
+    <h2><span class="section-number">#28</span> Financials <span class="layer-badge">Layer 6</span></h2>
+    <table>
+      <tr><th>Metric</th><th>Current</th><th>Target</th><th>Date</th></tr>
+      <tr><td>MRR</td><td class="placeholder">$0</td><td class="placeholder">$[X]</td><td class="placeholder">[month]</td></tr>
+      <tr><td>Paying customers</td><td class="placeholder">0</td><td class="placeholder">[N]</td><td class="placeholder">[month]</td></tr>
+      <tr><td>ARPU</td><td class="placeholder">$0</td><td class="placeholder">$[X]/mo</td><td class="placeholder">–</td></tr>
+      <tr><td>CAC</td><td class="placeholder">Unknown</td><td class="placeholder">$[X]</td><td class="placeholder">–</td></tr>
+      <tr><td>Churn</td><td class="placeholder">Unknown</td><td class="placeholder">&lt; [X]%/mo</td><td class="placeholder">–</td></tr>
+      <tr><td>LTV</td><td class="placeholder">Unknown</td><td class="placeholder">$[X]</td><td class="placeholder">–</td></tr>
+    </table>
+    <p class="placeholder">LTV calculation: ARPU × (1 / monthly churn rate). At $[X] ARPU and [X]% churn = $[X] LTV. CAC must stay below $[X] for positive unit economics.</p>
+  </section>
+
+  <!-- ─── #29 MARKETING ────────────────────────────────────── -->
+  <section id="marketing">
+    <h2><span class="section-number">#29</span> Marketing <span class="layer-badge">Layer 6</span></h2>
+    <h3>Go-to-market</h3>
+    <p class="placeholder">[How the first 100 customers will be acquired. Specific channels, outreach methods, partnerships.]</p>
+
+    <h3>Acquisition channels (active)</h3>
+    <table>
+      <tr><th>Channel</th><th>Method</th><th>Current volume</th><th>CAC</th></tr>
+      <tr>
+        <td class="placeholder">Organic search</td>
+        <td class="placeholder">SEO — [target keywords]</td>
+        <td class="placeholder">[N] visitors/mo</td>
+        <td class="placeholder">$0</td>
+      </tr>
+      <tr>
+        <td class="placeholder">[Channel]</td>
+        <td class="placeholder">[method]</td>
+        <td class="placeholder">[volume]</td>
+        <td class="placeholder">$[X]</td>
+      </tr>
+    </table>
+
+    <h3>Launch checklist</h3>
+    <ul>
+      <li class="placeholder">[ ] Product Hunt submission</li>
+      <li class="placeholder">[ ] Outreach to [target list]</li>
+      <li class="placeholder">[ ] [Channel-specific action]</li>
+    </ul>
+  </section>
+
+  <!-- ─── #30 COMPETITIVE ──────────────────────────────────── -->
+  <section id="competitive">
+    <h2><span class="section-number">#30</span> Competitive <span class="layer-badge">Layer 6</span></h2>
+    <table>
+      <tr><th>Competitor</th><th>Price</th><th>Their strength</th><th>Our advantage</th></tr>
+      <tr>
+        <td class="placeholder">[Competitor 1]</td>
+        <td class="placeholder">$[X]/mo</td>
+        <td class="placeholder">[what they do well]</td>
+        <td class="placeholder">[why we win against them]</td>
+      </tr>
+      <tr>
+        <td class="placeholder">[Competitor 2]</td>
+        <td class="placeholder">$[X]/mo</td>
+        <td class="placeholder">[what they do well]</td>
+        <td class="placeholder">[why we win against them]</td>
+      </tr>
+      <tr>
+        <td class="placeholder">[Competitor 3]</td>
+        <td class="placeholder">$[X]/mo</td>
+        <td class="placeholder">[what they do well]</td>
+        <td class="placeholder">[why we win against them]</td>
+      </tr>
+    </table>
+    <h3>Differentiation</h3>
+    <p class="placeholder">[1-3 sentences on what makes this product genuinely different. Specific, not generic. "Faster" and "cheaper" are not differentiation.]</p>
+  </section>
+
+  <!-- ─── #31 TESTING STRATEGY ─────────────────────────────── -->
+  <section id="testing-strategy">
+    <h2><span class="section-number">#31</span> Testing Strategy <span class="layer-badge">Layer 7</span></h2>
+    <table>
+      <tr><th>Layer</th><th>Tool</th><th>Count</th><th>Pass rate</th><th>Run command</th></tr>
+      <tr>
+        <td class="placeholder">Unit</td>
+        <td class="placeholder">Vitest</td>
+        <td class="placeholder">[N] tests</td>
+        <td class="placeholder">[X]%</td>
+        <td class="placeholder"><code>npm run test</code></td>
+      </tr>
+      <tr>
+        <td class="placeholder">Integration</td>
+        <td class="placeholder">Vitest + real DB</td>
+        <td class="placeholder">[N] tests</td>
+        <td class="placeholder">[X]%</td>
+        <td class="placeholder"><code>npm run test:integration</code></td>
+      </tr>
+      <tr>
+        <td class="placeholder">E2E</td>
+        <td class="placeholder">Playwright</td>
+        <td class="placeholder">[N] tests</td>
+        <td class="placeholder">[X]%</td>
+        <td class="placeholder"><code>npm run test:e2e</code></td>
+      </tr>
+    </table>
+    <h3>Critical gaps (not tested)</h3>
+    <ul>
+      <li class="placeholder">[Feature or flow that has no test coverage]</li>
+      <li class="placeholder">[Another untested critical path]</li>
+    </ul>
+  </section>
+
+  <!-- ─── #32 CHANGE MANAGEMENT ────────────────────────────── -->
+  <section id="change-management">
+    <h2><span class="section-number">#32</span> Change Management <span class="layer-badge">Layer 7</span></h2>
+    <table>
+      <tr><th>Tier</th><th>Definition</th><th>Approval required</th><th>Example</th></tr>
+      <tr>
+        <td class="placeholder">Tier 1 — Routine</td>
+        <td class="placeholder">Bug fix, copy change, style tweak</td>
+        <td class="placeholder">None — CC ships</td>
+        <td class="placeholder">Fix button label, fix broken link</td>
+      </tr>
+      <tr>
+        <td class="placeholder">Tier 2 — Feature</td>
+        <td class="placeholder">New feature, new route, schema change</td>
+        <td class="placeholder">Brad reviews spec before build</td>
+        <td class="placeholder">New dashboard tab, new API endpoint</td>
+      </tr>
+      <tr>
+        <td class="placeholder">Tier 3 — Breaking</td>
+        <td class="placeholder">Auth change, payment flow, data migration</td>
+        <td class="placeholder">Brad approves AND tests manually</td>
+        <td class="placeholder">New auth provider, Stripe → Square migration</td>
+      </tr>
+    </table>
+    <h3>Emergency change policy</h3>
+    <p class="placeholder">SEV 0/1 incidents bypass normal process — fix first, document after. Postmortem required within 48 hours.</p>
+  </section>
+
+  <!-- ─── #33 POSTMORTEM ───────────────────────────────────── -->
+  <section id="postmortem">
+    <h2><span class="section-number">#33</span> Postmortem <span class="layer-badge">Layer 7</span></h2>
+    <h3>Postmortem template</h3>
+    <pre><code>## Postmortem — [Incident title] — [date]
+
+### Timeline
+- [HH:MM] — Incident started
+- [HH:MM] — Detected by [who/what]
+- [HH:MM] — CC notified
+- [HH:MM] — Fix deployed
+- [HH:MM] — Incident closed
+
+### Root cause
+[One paragraph on what caused this]
+
+### Contributing factors
+- [Factor 1]
+- [Factor 2]
+
+### Impact
+- Duration: [X minutes]
+- Users affected: [N]
+- Revenue impact: $[X] or none
+
+### Fix applied
+[Description of the fix committed]
+
+### Prevention
+- [ ] [Action item to prevent recurrence] — owner: Brad / CC
+- [ ] [Add monitoring/alert for this failure mode]</code></pre>
+
+    <h3>Past postmortems</h3>
+    <p class="placeholder">None yet. Postmortems stored in this section as incidents occur.</p>
+  </section>
+
+  <!-- ─── #34 CHANGELOG ────────────────────────────────────── -->
+  <section id="changelog">
+    <h2><span class="section-number">#34</span> Changelog <span class="layer-badge">Layer 7</span></h2>
+    <table>
+      <tr><th>Bible version</th><th>Date</th><th>What changed</th><th>Updated by</th></tr>
+      <tr>
+        <td class="placeholder">v1</td>
+        <td class="placeholder">2026-MM-DD</td>
+        <td class="placeholder">Initial Bible created from /generate-bible</td>
+        <td class="placeholder">Claude Code</td>
+      </tr>
+    </table>
+    <div class="callout">
+      <p><strong>Naming rule:</strong> Always version the file — <code>OPERATING_BIBLE_v[N].html</code>. Never overwrite previous versions. Keep v1, v2, v3 all in repo.</p>
+    </div>
+  </section>
+
+  <!-- ─── #35 OPEN ISSUES ──────────────────────────────────── -->
+  <section id="open-issues">
+    <h2><span class="section-number">#35</span> Open Issues <span class="layer-badge">Layer 7</span></h2>
+
+    <h3>Active Linear issues</h3>
+    <table>
+      <tr><th>Issue</th><th>Title</th><th>Severity</th><th>Blocking</th></tr>
+      <tr>
+        <td class="placeholder"><a href="https://linear.app" class="placeholder">NUS-XXX</a></td>
+        <td class="placeholder">[Issue title]</td>
+        <td><span class="badge badge-red">SEV 1</span></td>
+        <td class="placeholder">Launch</td>
+      </tr>
+    </table>
+
+    <h3>Bible gaps (no Linear issue yet)</h3>
+    <table>
+      <tr><th>#</th><th>Section</th><th>Gap</th><th>Priority</th></tr>
+      <tr>
+        <td class="placeholder">1</td>
+        <td class="placeholder">#[N] [section name]</td>
+        <td class="placeholder">[What is missing or incomplete]</td>
+        <td><span class="badge badge-yellow">Medium</span></td>
+      </tr>
+    </table>
+
+    <h3>Bible score</h3>
+    <div class="score-bar">
+      <span style="min-width:40px" class="placeholder">0/35</span>
+      <div class="track"><div class="fill" style="width:0%"></div></div>
+    </div>
+    <p class="placeholder">Target: 28/35 before first client sees this product. Required minimum: 20/35 before first CC build session.</p>
+
+    <div class="callout warn">
+      <p><strong>Construction test:</strong> Give this Bible to a new CC session cold. Can CC describe what to build next without asking questions? If yes — Bible passes.</p>
+    </div>
+  </section>
+
+</main>
+</div>
+</body>
+</html>
