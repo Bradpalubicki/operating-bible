@@ -143,12 +143,28 @@ Analytics:      [PostHog / none yet]
 
 ---
 
-## 12. MEMORY FILES CC READS EVERY SESSION
+## 12. OPERATIONS QUICK REFERENCE
+
+> If something breaks in production, check here first.
+
+- **Rollback:** `vercel rollback [deployment-url]`
+- **Logs:** `vercel logs --environment production --since 1h --level error`
+- **Sentry project:** [URL]
+- **Spend threshold:** $[amount] — if hit, production deployments pause. Resume: Vercel dashboard → Settings → Spend Management.
+- **SEV 0/1 response:** Rollback first. Diagnose second. One-liner postmortem in CHANGELOG.md after.
+- **Secret leaked:** Rotate immediately → add new key to Vercel env → redeploy → check git history.
+
+---
+
+## 13. MEMORY FILES CC READS EVERY SESSION
 
 - `~/.claude/projects/.../memory/MEMORY.md` — Active projects + key locations
 - `memory/build-rules.md` — Forms, RLS, Server Actions rules
 - `memory/pending-todos.md` — What's outstanding before any new build starts
 - `.claude/OPERATING_BIBLE.html` — Full spec (reference, not read every session)
+- `.claude/OPERATING_BIBLE.html#deploy` — Deploy contract (rollback, env vars, spend threshold)
+- `.claude/OPERATING_BIBLE.html#slos` — SLOs and alert definitions
+- `.claude/OPERATING_BIBLE.html#third-parties` — Third-party registry and failure modes
 
 ---
 

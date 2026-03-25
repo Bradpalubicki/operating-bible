@@ -301,6 +301,58 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin-bottom:1.75rem;}
 .fin-yr-card .yr-stat .k{font-size:10px;color:rgba(255,255,255,.4);}
 .fin-yr-card .yr-stat .v{font-size:16px;font-weight:700;color:#fff;}
 
+/* ── META CONTRACT BLOCK — v3.1 ── */
+.meta-contract{background:var(--night);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin:.85rem 0;border-left:3px solid var(--accent-2);}
+.meta-contract h4{font-size:10px;font-weight:700;color:var(--accent-2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;font-family:'DM Mono',monospace;}
+.meta-table{width:100%;border-collapse:collapse;font-size:12px;}
+.meta-table td{padding:5px 10px;border-bottom:1px solid rgba(255,255,255,.06);color:rgba(255,255,255,.75);vertical-align:top;}
+.meta-table td:first-child{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent-2);font-weight:600;min-width:160px;white-space:nowrap;}
+.meta-table tr:last-child td{border-bottom:none;}
+
+/* ── SLO TABLE — v3.1 ── */
+.slo-table{width:100%;border-collapse:collapse;font-size:12px;margin:.75rem 0;}
+.slo-table th{font-size:10px;font-weight:700;padding:6px 10px;background:var(--night);color:rgba(255,255,255,.6);text-align:left;border-bottom:2px solid rgba(255,255,255,.1);text-transform:uppercase;letter-spacing:.05em;}
+.slo-table th:first-child{border-radius:var(--radius) 0 0 0;}
+.slo-table th:last-child{border-radius:0 var(--radius) 0 0;}
+.slo-table td{padding:8px 10px;border-bottom:1px solid var(--rule);color:var(--ink-2);vertical-align:top;line-height:1.4;}
+.slo-table tr:last-child td{border-bottom:none;}
+.slo-table td:first-child{font-weight:600;color:var(--ink);}
+.slo-table code{font-family:'DM Mono',monospace;font-size:10px;background:var(--page-2);padding:1px 5px;border-radius:3px;color:var(--accent);}
+.slo-pass{color:#1A6B48;font-weight:700;}
+.slo-warn{color:#8B6914;font-weight:700;}
+
+/* ── DEPLOY CONTRACT — v3.1 ── */
+.deploy-block{background:var(--night);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin:.85rem 0;}
+.deploy-block h4{font-size:10px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;font-family:'DM Mono',monospace;}
+.deploy-row{display:flex;gap:12px;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:12px;}
+.deploy-row:last-child{border-bottom:none;}
+.deploy-key{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent-2);min-width:160px;padding-top:2px;font-weight:600;}
+.deploy-val{color:rgba(255,255,255,.75);line-height:1.55;flex:1;}
+.deploy-val code{font-family:'DM Mono',monospace;font-size:11px;background:rgba(255,255,255,.08);padding:1px 6px;border-radius:3px;color:#98E0A8;}
+
+/* ── THIRD-PARTY REGISTRY — v3.1 ── */
+.tp-table{width:100%;border-collapse:collapse;font-size:12px;margin:.75rem 0;}
+.tp-table th{font-size:10px;font-weight:700;padding:6px 10px;background:var(--page-2);color:var(--ink-3);text-align:left;border-bottom:2px solid var(--rule);text-transform:uppercase;letter-spacing:.05em;}
+.tp-table td{padding:7px 10px;border-bottom:1px solid var(--rule);color:var(--ink-2);vertical-align:top;line-height:1.4;}
+.tp-table tr:last-child td{border-bottom:none;}
+.tp-table td:first-child{font-weight:600;color:var(--ink);}
+.tp-table code{font-family:'DM Mono',monospace;font-size:10px;background:var(--page-2);padding:1px 5px;border-radius:3px;color:var(--accent);}
+.tp-crit{color:#C94040;font-weight:700;}
+.tp-med{color:#8B6914;font-weight:600;}
+.tp-low{color:#1A6B48;font-weight:600;}
+
+/* ── SEV TAXONOMY — v3.1 ── */
+.sev-row{display:flex;gap:12px;padding:.75rem 0;border-bottom:1px solid var(--rule);}
+.sev-row:last-child{border-bottom:none;}
+.sev-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;min-width:52px;text-align:center;margin-top:2px;}
+.sev-0{background:#6B1A1A;color:#fff;}
+.sev-1{background:#C94040;color:#fff;}
+.sev-2{background:#8B6914;color:#fff;}
+.sev-3{background:var(--page-2);color:var(--ink-3);}
+.sev-body{flex:1;}
+.sev-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.sev-desc{font-size:12px;color:var(--ink-2);line-height:1.55;}
+
 /* ── PRINT + RESPONSIVE ── */
 @media print{nav{display:none;}main,body{margin:0;}.cover{margin-left:0;page-break-after:always;}main{margin-left:0;}.content{max-width:100%;padding:2rem;}}
 @media(max-width:900px){nav{display:none;}main{margin-left:0;}.cover{margin-left:0;}.g2,.g3,.g4,.met4,.price-grid,.screen-grid,.voice-pair,.fin-year{grid-template-columns:1fr;}}
@@ -345,6 +397,11 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin-bottom:1.75rem;}
   <a href="#metrics">Success Metrics</a>
   <a href="#financials">Financial Model</a>
   <a href="#pitch">Investor Pitch</a>
+  <div class="nav-sec">Operations</div>
+  <a href="#deploy">Deploy Contract</a>
+  <a href="#slos">SLOs & Alerts</a>
+  <a href="#incidents">Incident Response</a>
+  <a href="#third-parties">Third-Party Registry</a>
   <div class="nav-sec">Compliance</div>
   <a href="#compliance">Compliance Checklist</a>
   <div class="nav-sec">Claude Code</div>
@@ -1115,6 +1172,287 @@ CREATE TABLE managed_clients (
   <div class="compliance-row"><div class="compliance-check todo">○</div><div><div class="compliance-label">Sentry error tracking live in production</div><div class="compliance-desc">Required before launch. Not optional.</div></div></div>
   <div class="compliance-row"><div class="compliance-check todo">○</div><div><div class="compliance-label">[Vertical-specific compliance]</div><div class="compliance-desc">[HIPAA / COPPA / TCPA / PCI — depends on vertical. Add the requirements here.]</div></div></div>
   <div class="compliance-row"><div class="compliance-check risk">⚠</div><div><div class="compliance-label">[Known compliance risk]</div><div class="compliance-desc">[What the risk is and what we're doing about it before launch.]</div></div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: PROJECT META CONTRACT — v3.1 ADDITION                -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- NOTE: This block is machine-readable. CC reads it before any  -->
+<!-- session. Keep field names stable — tools depend on them.       -->
+<div class="section-block" id="meta-contract" style="display:none;">
+<!-- _meta.yaml equivalent — copy this to _meta.yaml in repo root -->
+<!--
+app_name: "[product-slug]"
+display_name: "[Product Name]"
+repo: "[github.com/org/repo]"
+deploy_platform: "vercel"
+production_url: "[product.vercel.app]"
+production_branch: "main"
+primary_db: "supabase"
+auth: "[clerk | supabase-auth]"
+payments: "[square | revenuecat | stripe-legacy | none]"
+compliance_flags: []   # hipaa | coppa | tcpa | pci
+vertical: "[health | legal | kids | equipment | wellness | beauty | other]"
+phase: 1
+owner: "brad@nustack.digital"
+agency_client_id: "[client-slug | nustack-internal]"
+-->
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: DEPLOY CONTRACT — v3.1 ADDITION                      -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="deploy">
+  <div class="eyebrow">Operations · v3.1</div>
+  <div class="section-title">Deploy Contract</div>
+  <div class="section-intro">The exact commands, branches, and rules that govern how this engine ships. CC reads this before any deployment action. On-call reads this during an incident.</div>
+  <hr class="rule">
+
+  <div class="deploy-block">
+    <h4>Vercel Deploy Contract</h4>
+    <div class="deploy-row"><span class="deploy-key">production_branch</span><span class="deploy-val">main — all merges to main auto-deploy to production</span></div>
+    <div class="deploy-row"><span class="deploy-key">preview_branches</span><span class="deploy-val">all other branches — preview URL auto-created on push</span></div>
+    <div class="deploy-row"><span class="deploy-key">rollback</span><span class="deploy-val"><code>vercel rollback [deployment-url]</code> — reverts production to previous deployment</span></div>
+    <div class="deploy-row"><span class="deploy-key">undo_rollback</span><span class="deploy-val"><code>vercel promote [deployment-url]</code> — re-promotes any prior deployment to production</span></div>
+    <div class="deploy-row"><span class="deploy-key">view_logs</span><span class="deploy-val"><code>vercel logs --environment production --since 1h --level error</code></span></div>
+    <div class="deploy-row"><span class="deploy-key">env_var_rule</span><span class="deploy-val">Env var changes apply only to NEW deployments — existing deployments are unaffected. Redeploy required after any env var change.</span></div>
+    <div class="deploy-row"><span class="deploy-key">env_pull_local</span><span class="deploy-val"><code>vercel env pull .env.local</code> — pulls current env vars for local development</span></div>
+    <div class="deploy-row"><span class="deploy-key">spend_threshold</span><span class="deploy-val">[$ amount] — Vercel Spend Management will pause production deployments at this amount. Recovery: resume via Vercel dashboard → Settings → Spend Management.</span></div>
+    <div class="deploy-row"><span class="deploy-key">deployment_protection</span><span class="deploy-val">[none | vercel-auth | password | trusted-ips] — preview environments; production is public</span></div>
+  </div>
+
+  <div class="sub">Branch protection rules (GitHub)</div>
+  <div class="card">
+    <ul>
+      <li>main requires: passing CI build + TypeScript check (<code>npx tsc --noEmit</code>)</li>
+      <li>main requires: at least 1 approved review (Brad approves)</li>
+      <li>No force-pushes to main — ever</li>
+      <li>Delete branch on merge: YES</li>
+    </ul>
+  </div>
+
+  <div class="sub">When a bad deploy happens — exact steps</div>
+  <div class="card">
+    <div class="flow-step"><div class="flow-n">1</div><div class="flow-body"><div class="flow-title">Identify</div><div class="flow-desc">Check Vercel dashboard → Deployments. Compare current deployment hash to last known good. Check <code>vercel logs --environment production --since 30m</code> for errors.</div></div></div>
+    <div class="flow-step"><div class="flow-n">2</div><div class="flow-body"><div class="flow-title">Rollback (60 seconds)</div><div class="flow-desc"><code>vercel rollback [last-good-deployment-url]</code> — production reverts immediately. Confirm in Vercel dashboard that new deployment shows as active.</div></div></div>
+    <div class="flow-step"><div class="flow-n">3</div><div class="flow-body"><div class="flow-title">Fix forward</div><div class="flow-desc">Create fix branch → PR → merge to main. New deployment will supersede the rollback automatically.</div></div></div>
+    <div class="flow-step"><div class="flow-n">4</div><div class="flow-body"><div class="flow-title">Document</div><div class="flow-desc">Add a one-liner to this engine's CHANGELOG.md: date, what broke, what was rolled back, how it was fixed.</div></div></div>
+  </div>
+
+  <div class="sub">Secrets rules (non-negotiable)</div>
+  <div class="ac-block">
+    <h5>Secrets checklist — every engine, every deploy</h5>
+    <div class="ac-item"><span class="ac-given">RULE</span><span>No secrets in repo — not in .env, not in comments, not in logs. If found: rotate immediately, don't just delete from code.</span></div>
+    <div class="ac-item"><span class="ac-given">RULE</span><span>All secrets live in Vercel env vars (or Infisical where wired). Never in <code>process.env</code> calls in client-side code.</span></div>
+    <div class="ac-item"><span class="ac-given">RULE</span><span>AI API keys always proxied server-side. <code>ANTHROPIC_API_KEY</code> never touches the client bundle.</span></div>
+    <div class="ac-item"><span class="ac-given">RULE</span><span>Logs must never contain API keys, user passwords, payment tokens, or PII. Add redaction before any <code>console.error</code> that logs request payloads.</span></div>
+    <div class="ac-item"><span class="ac-given">ROTATION</span><span>[Quarterly | On any suspected leak] — document rotation date here when done.</span></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: SLOs & ALERTS — v3.1 ADDITION                        -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="slos">
+  <div class="eyebrow">Operations · v3.1</div>
+  <div class="section-title">SLOs, Alerts & The Single Number</div>
+  <div class="section-intro">Define what "working" means in measurable terms. 1–3 SLOs per engine. Every alert links to an action. No alert without a runbook.</div>
+  <hr class="rule">
+
+  <div class="al al-blue"><strong>Why SLOs matter for NuStack:</strong> Without them, we optimize for the wrong thing — shipping features while the core loop quietly breaks. An SLO is just: "If THIS metric drops below THIS threshold, something is wrong and someone should know." That's it.</div>
+
+  <div class="sub" style="margin-top:1rem;">SLO table</div>
+  <table class="slo-table">
+    <thead>
+      <tr>
+        <th>Journey / Endpoint</th>
+        <th>What we measure (SLI)</th>
+        <th>Target (SLO)</th>
+        <th>Window</th>
+        <th>Alert name</th>
+        <th>If broken →</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>[Core action — e.g., "Complete booking"]</td>
+        <td>Success rate: <code>POST /api/bookings</code> 2xx / total</td>
+        <td class="slo-pass">≥ 99%</td>
+        <td>7 days</td>
+        <td><code>booking-success-rate</code></td>
+        <td>Check DB, check Square creds, rollback if recent deploy</td>
+      </tr>
+      <tr>
+        <td>[Key page — e.g., "Dashboard load"]</td>
+        <td>p95 response time: <code>GET /dashboard</code></td>
+        <td class="slo-pass">p95 &lt; 800ms</td>
+        <td>7 days</td>
+        <td><code>dashboard-latency-p95</code></td>
+        <td>Check Supabase query performance, check N+1 queries</td>
+      </tr>
+      <tr>
+        <td>[Payment flow — e.g., "Payment collected"]</td>
+        <td>Square webhook 200 acknowledgment rate</td>
+        <td class="slo-pass">≥ 99.5%</td>
+        <td>30 days</td>
+        <td><code>payment-webhook-ack</code></td>
+        <td>Check Square dashboard, check idempotency key collisions</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sub">Golden signals dashboard (what to check first in any incident)</div>
+  <div class="g4">
+    <div class="card"><h4>Latency</h4><p>How long does it take to process a request? p50, p95, p99. Spike = query regression or cold start.</p></div>
+    <div class="card"><h4>Traffic</h4><p>How many requests/min? Sudden drop = upstream error or deployment issue. Sudden spike = check for abuse.</p></div>
+    <div class="card"><h4>Errors</h4><p>5xx rate. Any spike above 0.1% = investigate immediately. Link to Sentry project.</p></div>
+    <div class="card"><h4>Saturation</h4><p>DB connection pool %, Vercel function concurrency. Near limit = scale trigger.</p></div>
+  </div>
+
+  <div class="sub">Where to look</div>
+  <div class="card">
+    <ul>
+      <li><strong>Vercel logs:</strong> <code>vercel logs --environment production --since 1h --level error</code></li>
+      <li><strong>Sentry:</strong> [Sentry project URL] — all unhandled exceptions, performance traces</li>
+      <li><strong>Supabase:</strong> Dashboard → Database → Performance — slow queries, connection pool</li>
+      <li><strong>PostHog:</strong> [PostHog project URL] — user-facing funnel drop-offs, event failures</li>
+    </ul>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: INCIDENT RESPONSE — v3.1 ADDITION                    -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="incidents">
+  <div class="eyebrow">Operations · v3.1</div>
+  <div class="section-title">Incident Response</div>
+  <div class="section-intro">What to do when something breaks in production. Keep this short enough to actually use at 2am.</div>
+  <hr class="rule">
+
+  <div class="sub">Severity taxonomy</div>
+  <div class="sev-row"><span class="sev-badge sev-0">SEV 0</span><div class="sev-body"><div class="sev-title">Total outage — all users affected, core feature down</div><div class="sev-desc">Examples: site down, auth broken, all payments failing. Action: rollback immediately, notify client within 15 min, fix forward. Do not sleep.</div></div></div>
+  <div class="sev-row"><span class="sev-badge sev-1">SEV 1</span><div class="sev-body"><div class="sev-title">Core feature broken for some users, or data integrity risk</div><div class="sev-desc">Examples: bookings saving but emails not sending, payment webhook failures >1%. Action: investigate root cause within 1h, notify client if user-visible, hotfix or rollback.</div></div></div>
+  <div class="sev-row"><span class="sev-badge sev-2">SEV 2</span><div class="sev-body"><div class="sev-title">Degraded experience — not breaking, but wrong</div><div class="sev-desc">Examples: slow page loads, UI bug visible to all users, non-critical feature broken. Action: fix in next deployment. Document in CHANGELOG.</div></div></div>
+  <div class="sev-row"><span class="sev-badge sev-3">SEV 3</span><div class="sev-body"><div class="sev-title">Minor issue — cosmetic, affects &lt;5% of users, no data risk</div><div class="sev-desc">Examples: wrong copy, styling bug on one screen, edge case error. Action: add to backlog, fix in next sprint.</div></div></div>
+
+  <div class="sub" style="margin-top:1.5rem;">Standard playbook — SEV 0/1 response</div>
+  <div class="card">
+    <div class="flow-step"><div class="flow-n">1</div><div class="flow-body"><div class="flow-title">Confirm impact</div><div class="flow-desc">Is the user impact real? Check Sentry for error spike. Check Vercel dashboard — is latest deployment green? Check PostHog for funnel drop. If false alarm: document and close.</div></div></div>
+    <div class="flow-step"><div class="flow-n">2</div><div class="flow-body"><div class="flow-title">Stabilize first, diagnose second</div><div class="flow-desc">If the bad deploy is &lt;30min old: <code>vercel rollback</code> immediately. Don't spend time on root cause while users are down. Rollback takes 60 seconds.</div></div></div>
+    <div class="flow-step"><div class="flow-n">3</div><div class="flow-body"><div class="flow-title">Collect evidence</div><div class="flow-desc">Pull Vercel logs (<code>vercel logs --since 2h --level error --json</code>). Screenshot Sentry issue. Note exact time incident started vs last deploy time.</div></div></div>
+    <div class="flow-step"><div class="flow-n">4</div><div class="flow-body"><div class="flow-title">Fix forward</div><div class="flow-desc">Create fix branch. Write test that catches the regression. PR → merge → confirm deployment green → verify fix in production.</div></div></div>
+    <div class="flow-step"><div class="flow-n">5</div><div class="flow-body"><div class="flow-title">One-line postmortem</div><div class="flow-desc">Add to CHANGELOG.md: <code>[date] SEV[N]: [what broke] → [what was done] → [root cause] → [prevention]</code>. That's all. No 10-page document for a NuStack incident.</div></div></div>
+  </div>
+
+  <div class="sub">Secret leak response (if API key appears in logs, repo, or Sentry)</div>
+  <div class="al al-red"><strong>Treat every suspected leak as a confirmed leak.</strong> Rotate first. Investigate after.</div>
+  <div class="card">
+    <ul>
+      <li>1. Rotate the key immediately — Anthropic, Square, Supabase, Clerk, whoever issued it</li>
+      <li>2. Add new key to Vercel env vars — <code>vercel env add KEY_NAME production</code></li>
+      <li>3. Redeploy — <code>vercel deploy --prod</code> or merge a trivial commit to main</li>
+      <li>4. Check git log for the leak: <code>git log --all -S "leaked_key_prefix" --oneline</code></li>
+      <li>5. If key was in git history: rotate again after removing from history (or just keep it rotated)</li>
+      <li>6. Add to .gitignore if the file that leaked it isn't already there</li>
+    </ul>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION: THIRD-PARTY REGISTRY — v3.1 ADDITION                 -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-block" id="third-parties">
+  <div class="eyebrow">Operations · v3.1</div>
+  <div class="section-title">Third-Party Service Registry</div>
+  <div class="section-intro">Every external dependency this engine relies on. Rate limits, failure modes, credential ownership. The first thing to check during an incident involving external calls.</div>
+  <hr class="rule">
+
+  <table class="tp-table">
+    <thead>
+      <tr>
+        <th>Service</th>
+        <th>Purpose</th>
+        <th>Env Var(s)</th>
+        <th>Credential Owner</th>
+        <th>Rate Limit</th>
+        <th>If Down →</th>
+        <th>Data Shared</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Supabase</td>
+        <td>Database + Auth</td>
+        <td><code>SUPABASE_URL</code><br><code>SUPABASE_ANON_KEY</code></td>
+        <td>NuStack</td>
+        <td>500 connections (free) / 1k (pro)</td>
+        <td class="tp-crit">Critical — app non-functional. Check Supabase status page.</td>
+        <td>All user data</td>
+      </tr>
+      <tr>
+        <td>Clerk</td>
+        <td>Auth</td>
+        <td><code>CLERK_SECRET_KEY</code><br><code>NEXT_PUBLIC_CLERK_PK</code></td>
+        <td>NuStack</td>
+        <td>—</td>
+        <td class="tp-crit">Critical — login broken. Check clerk.com/status.</td>
+        <td>User identity</td>
+      </tr>
+      <tr>
+        <td>Anthropic (Claude)</td>
+        <td>AI features</td>
+        <td><code>ANTHROPIC_API_KEY</code></td>
+        <td>NuStack</td>
+        <td>[tier RPM/TPM]</td>
+        <td class="tp-med">Degrade gracefully — show fallback UI, don't surface error to user. Log to Sentry.</td>
+        <td>User messages (no PII in prompts — enforce)</td>
+      </tr>
+      <tr>
+        <td>[Square / RevenueCat]</td>
+        <td>Payments</td>
+        <td><code>[SQUARE_ACCESS_TOKEN]</code><br><code>[SQUARE_LOCATION_ID]</code></td>
+        <td>[Client holds this]</td>
+        <td>—</td>
+        <td class="tp-crit">Critical — payments blocked. Check Square dashboard. Escalate to client immediately.</td>
+        <td>Payment data — never store raw card data</td>
+      </tr>
+      <tr>
+        <td>Sentry</td>
+        <td>Error tracking</td>
+        <td><code>SENTRY_DSN</code></td>
+        <td>NuStack</td>
+        <td>—</td>
+        <td class="tp-low">Non-critical — errors not tracked but app still works. Fix within 24h.</td>
+        <td>Stack traces, request context (redact PII)</td>
+      </tr>
+      <tr>
+        <td>Vercel</td>
+        <td>Hosting + Edge</td>
+        <td>—</td>
+        <td>NuStack</td>
+        <td>[Plan limits]</td>
+        <td class="tp-crit">Critical — total outage. Check vercel.com/status. Nothing to do except wait + communicate.</td>
+        <td>Request logs, function code</td>
+      </tr>
+      <tr>
+        <td>[Additional integration]</td>
+        <td>[Purpose]</td>
+        <td><code>[ENV_VAR]</code></td>
+        <td>[Owner]</td>
+        <td>[Limit]</td>
+        <td>[What breaks and what to do]</td>
+        <td>[What data crosses this boundary]</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="al al-amber" style="margin-top:1rem;"><strong>Credential ownership rule:</strong> Square/Stripe/Twilio credentials belong to the CLIENT, not NuStack. We cannot retrieve or reset them. If lost: client must log into their account. Document who at the client holds each credential.</div>
 </div>
 
 <div class="divider"></div>
